@@ -1,1 +1,6 @@
+name: Build proxy
 
+on:
+  push:
+    branch:
+      - main
