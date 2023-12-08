@@ -5,7 +5,6 @@ import (
 	errs "errors"
 	"overlord/pkg/conv"
 	libnet "overlord/pkg/net"
-	"overlord/proxy"
 	"overlord/proxy/proto"
 	"overlord/proxy/proto/redis"
 
@@ -32,7 +31,7 @@ type proxyConn struct {
 }
 
 // NewProxyConn creates new redis cluster Encoder and Decoder.
-func NewProxyConn(conn *libnet.Conn, fer proto.Forwarder, password string, cc *proxy.ClusterConfig) proto.ProxyConn {
+func NewProxyConn(conn *libnet.Conn, fer proto.Forwarder, password string) proto.ProxyConn {
 	var c *cluster
 	if fer != nil {
 		c = fer.(*cluster)
@@ -40,7 +39,7 @@ func NewProxyConn(conn *libnet.Conn, fer proto.Forwarder, password string, cc *p
 	r := &proxyConn{
 		c: c,
 		//pc:       redis.NewProxyConn(conn, password),
-		pc:       redis.NewProxyConnV2(conn, cc),
+		//pc:       redis.NewProxyConnV2(conn, cca, ccert, cpasswd, useTls),
 		password: password,
 	}
 	if password != "" {
@@ -49,6 +48,21 @@ func NewProxyConn(conn *libnet.Conn, fer proto.Forwarder, password string, cc *p
 		r.authorized = true
 	}
 
+	return r
+}
+
+// NewProxyConn creates new redis cluster Encoder and Decoder.  cca, ccert, cpasswd string, useTls bool
+func NewProxyConnV2(conn *libnet.Conn, fer proto.Forwarder, cca, ccert, cpasswd string, useTls bool) proto.ProxyConn {
+	var c *cluster
+	if fer != nil {
+		c = fer.(*cluster)
+	}
+	r := &proxyConn{
+		c: c,
+		//pc:       redis.NewProxyConn(conn, password),
+		pc:       redis.NewProxyConnV2(conn, cca, ccert, cpasswd, useTls),
+		password: cpasswd,
+	}
 	return r
 }
 

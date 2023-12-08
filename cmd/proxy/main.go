@@ -92,7 +92,6 @@ func main() {
 		go http.ListenAndServe(c.Stat, nil)
 		prom.Init()
 	}
-
 	prom.VersionState(version.Str())
 	// hanlde signal
 	signalHandler()
