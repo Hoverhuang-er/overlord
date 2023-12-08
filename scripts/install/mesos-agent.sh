@@ -6,7 +6,7 @@ zk_addr=127.0.0.1:2181
 echo -e "[program:mesos]">/etc/supervisor/conf.d/mesos-agent.conf
 echo -e "command=/data/mesos-1.7.0/build/bin/mesos-agent.sh --master=zk://${zk_addr}/mesos --work_dir=/data/lib/mesos --ip=\c">>/etc/supervisor/conf.d/mesos-agent.conf
 ifconfig |grep inet|grep -v '127.0.0.1'|awk '{print $2}' |awk -F ':' '{print $2}'>>/etc/supervisor/conf.d/mesos-agent.conf
-echo 'directoy=/data/mesos-1.7.0/build
+echo 'directoy=/data/mesos-1.7.0/build.yaml
 user=root
 autostart=true
 autorestart=true

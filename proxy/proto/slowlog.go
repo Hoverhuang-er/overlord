@@ -14,7 +14,7 @@ type SlowlogEntries struct {
 	Entries []*SlowlogEntry `json:"entries"`
 }
 
-// NewSlowlogEntry build empty slowlog
+// NewSlowlogEntry build.yaml empty slowlog
 func NewSlowlogEntry(ctype types.CacheType) *SlowlogEntry {
 	return &SlowlogEntry{
 		CacheType: ctype,

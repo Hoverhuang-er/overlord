@@ -5,7 +5,7 @@
 *.dylib
 *.idea
 
-# Test binary, build with `go test -c`
+# Test binary, build.yaml with `go test -c`
 *.test
 *.prof
 

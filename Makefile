@@ -11,3 +11,6 @@ build:
 	cd cmd/proxy && go build && cd -
 	cd cmd/scheduler && go build && cd -
 	cd cmd/anzi && go build && cd -
+
+push:
+	git add . && git commit -m "update" && git tag -a v100.0.1 -m "v100.0.1" && git push origin v100.0.1 --tags -f

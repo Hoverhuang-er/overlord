@@ -3,6 +3,7 @@ package log
 import (
 	"flag"
 	"fmt"
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -92,32 +93,39 @@ func InitHandle(hs ...Handler) {
 
 // Infof logs a message at the info log level.
 func Infof(format string, args ...interface{}) {
-	logf(_infoLevel, format, args...)
+	//logf(_infoLevel, format, args...)
+	logrus.Infof(format, args...)
 }
 
 // Warnf logs a message at the warning log level.
 func Warnf(format string, args ...interface{}) {
-	logf(_warnLevel, format, args...)
+	//logf(_warnLevel, format, args...)
+	logrus.Warnf(format, args...)
 }
 
 // Errorf logs a message at the error log level.
 func Errorf(format string, args ...interface{}) {
-	logf(_errorLevel, format, args...)
+	//logf(_errorLevel, format, args...)
+	logrus.Errorf(format, args...)
 }
 
 // Info logs a message at the info log level.
 func Info(args ...interface{}) {
-	logs(_infoLevel, args...)
+	//logs(_infoLevel, args...)
+	logrus.Info(args...)
+
 }
 
 // Warn logs a message at the warning log level.
 func Warn(args ...interface{}) {
-	logs(_warnLevel, args...)
+	//logs(_warnLevel, args...)
+	logrus.Warn(args...)
 }
 
 // Error logs a message at the error log level.
 func Error(args ...interface{}) {
-	logs(_errorLevel, args...)
+	//logs(_errorLevel, args...)
+	logrus.Error(args...)
 }
 
 func logf(lv Level, format string, args ...interface{}) {

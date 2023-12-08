@@ -86,15 +86,13 @@ func main() {
 	if reload {
 		go p.MonitorConfChange(clusterConfFile)
 	}
-	// pprof
-	if c.Stat != "" {
+	// Add Prometheus exporter
+	if c.Stat == "" {
+		c.Stat = ":2110"
 		go http.ListenAndServe(c.Stat, nil)
-		if c.Proxy.UseMetrics {
-			prom.Init()
-		} else {
-			prom.On = false
-		}
+		prom.Init()
 	}
+
 	prom.VersionState(version.Str())
 	// hanlde signal
 	signalHandler()

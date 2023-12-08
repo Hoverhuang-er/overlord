@@ -10,7 +10,7 @@ mv go.sum go.sum.backup
 # unset go11module
 export GO111MODULE=auto
 
-#ls ci/fuzz/ | xargs -n1 -I"{}" cd {} && go-fuzz-build
+#ls ci/fuzz/ | xargs -n1 -I"{}" cd {} && go-fuzz-build.yaml
 ls ci/fuzz/ | xargs -n1 -I"{}" python scripts/fuzz_tools.py ci/fuzz/{}
 
 # defer setting
