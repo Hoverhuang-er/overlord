@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TAG: v100.0.0
+  TAG: $(date +'%Y%m%')
 
 jobs:
   apicli:
@@ -41,7 +41,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-apicli:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-apicli:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
@@ -73,7 +73,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-scheduler:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-scheduler:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
@@ -105,7 +105,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-executor:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-executor:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
@@ -137,7 +137,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-balancer:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-balancer:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
@@ -169,7 +169,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-apiserver:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-apiserver:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
@@ -201,7 +201,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-enri:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-enri:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
@@ -233,7 +233,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-proxy:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-proxy:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
@@ -265,7 +265,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-anzi:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-anzi:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
@@ -298,7 +298,7 @@ jobs:
           context: .
           push: true
           file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/${{ github.repository_name }}-gui:${{ env.TAG }}
+          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord-gui:${{ env.TAG }}
           args: |
             TAG=${{ github.ref }}
             TARGETARCH=${{ matrix.arch }}
