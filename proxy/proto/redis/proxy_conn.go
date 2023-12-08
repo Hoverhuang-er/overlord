@@ -3,6 +3,8 @@ package redis
 import (
 	"bytes"
 	"fmt"
+	"github.com/sirupsen/logrus"
+	"overlord/proxy"
 	"strconv"
 
 	"overlord/pkg/bufio"
@@ -58,6 +60,29 @@ func NewProxyConn(conn *libnet.Conn, password string) proto.ProxyConn {
 		r.authorized = true
 	}
 	return r
+}
+
+// NewProxyConnV2 create new redis Encoder and Decoder with Option
+// Option 1: use password to auth and load password from config file
+// Option 2: emulated redis cluster to auth
+func NewProxyConnV2(conn *libnet.Conn, cc *proxy.ClusterConfig) (r proto.ProxyConn) {
+	if cc.Auth.UseTLS {
+		// TODO: use tls
+		return nil
+	} else {
+		// Use password to auth
+		if cc.Auth.Password == "" {
+			logrus.Error("redis password is empty, please check config file")
+			return nil
+		}
+		return &proxyConn{
+			br:        bufio.NewReader(conn, bufio.Get(1024)),
+			bw:        bufio.NewWriter(conn),
+			completed: true,
+			password:  cc.Auth.Password,
+			resp:      &resp{},
+		}
+	}
 }
 
 func (pc *proxyConn) Decode(msgs []*proto.Message) ([]*proto.Message, error) {

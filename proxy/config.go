@@ -79,6 +79,14 @@ type ClusterConfig struct {
 	SlowlogSlowerThan int             `toml:"slowlog_slower_than"`
 	Servers           []string        `toml:"servers"`
 	Password          string          `toml:"password"`
+	Auth              Auth            `toml:"auth"`
+}
+type Auth struct {
+	UseTLS   bool   `toml:"use_tls"`
+	CertFile string `toml:"cert_file"`
+	KeyFile  string `toml:"key_file"`
+	CaFile   string `toml:"ca_file"`
+	Password string `toml:"password"`
 }
 
 // ValidateStandalone validate redis/memcache address is valid or not

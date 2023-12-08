@@ -5,6 +5,7 @@ import (
 	errs "errors"
 	"overlord/pkg/conv"
 	libnet "overlord/pkg/net"
+	"overlord/proxy"
 	"overlord/proxy/proto"
 	"overlord/proxy/proto/redis"
 
@@ -31,14 +32,15 @@ type proxyConn struct {
 }
 
 // NewProxyConn creates new redis cluster Encoder and Decoder.
-func NewProxyConn(conn *libnet.Conn, fer proto.Forwarder, password string) proto.ProxyConn {
+func NewProxyConn(conn *libnet.Conn, fer proto.Forwarder, password string, cc *proxy.ClusterConfig) proto.ProxyConn {
 	var c *cluster
 	if fer != nil {
 		c = fer.(*cluster)
 	}
 	r := &proxyConn{
-		c:        c,
-		pc:       redis.NewProxyConn(conn, password),
+		c: c,
+		//pc:       redis.NewProxyConn(conn, password),
+		pc:       redis.NewProxyConnV2(conn, cc),
 		password: password,
 	}
 	if password != "" {

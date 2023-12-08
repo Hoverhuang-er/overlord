@@ -77,6 +77,7 @@ func newDefaultForwarder(cc *ClusterConfig) proto.Forwarder {
 	if err != nil {
 		panic(err)
 	}
+	prom.RedisNode.WithLabelValues(cc.Name).Set(float64(len(addrs)))
 	conns := newConnections(cc)
 	conns.init(addrs, ans, ws, alias, nil)
 	conns.startPinger()
@@ -121,6 +122,7 @@ func (f *defaultForwarder) Forward(msgs []*proto.Message) error {
 
 func (f *defaultForwarder) Update(servers []string) error {
 	addrs, ws, ans, alias, err := parseServers(servers)
+	prom.RedisNode.WithLabelValues(f.cc.Name).Set(float64(len(addrs)))
 	if err != nil {
 		return err
 	}
@@ -141,6 +143,8 @@ func (f *defaultForwarder) Update(servers []string) error {
 		log.Infof("connection to node:%s is not used anymore, just close it", addr)
 		conn.Close()
 	}
+	// Get redis node addr and port from parseServers
+	log.Infof("cluster:%s update servers:%v", f.cc.Name, servers)
 	return nil
 }
 
@@ -247,13 +251,21 @@ func (c *connections) startPinger() {
 	if !c.cc.PingAutoEject {
 		return
 	}
+	var failure int
 	for idx, addr := range c.addrs {
 		p := &pinger{cc: c.cc, addr: addr, alias: addr, weight: c.ws[idx]}
 		if c.alias {
 			p.alias = c.ans[idx]
 		}
-		go c.processPing(p)
+		go func() {
+			c.processPing(p)
+			if p.failure > 0 {
+				failure = failure + p.failure
+			}
+		}()
 	}
+	prom.RedisNodeGreen.WithLabelValues(c.cc.Name).Set(float64(len(c.addrs) - failure))
+	log.Infof("cluster:%s start pinger with %d nodes", c.cc.Name, len(c.addrs))
 }
 
 // pingSleepTime for unit test override!!!

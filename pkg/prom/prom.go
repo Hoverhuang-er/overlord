@@ -22,6 +22,9 @@ var (
 	gerr         *prometheus.GaugeVec
 	proxyTimer   *prometheus.HistogramVec
 	handlerTimer *prometheus.HistogramVec
+	// Redis conn details
+	RedisNode      *prometheus.GaugeVec
+	RedisNodeGreen *prometheus.GaugeVec
 
 	clusterLabels        = []string{"cluster"}
 	clusterNodeErrLabels = []string{"cluster", "node", "cmd", "error"}
@@ -67,6 +70,20 @@ func Init() {
 			Buckets: []float64{1000, 2000, 4000, 10000},
 		}, clusterNodeCmdLabels)
 	prometheus.MustRegister(handlerTimer)
+	// Redis conn details
+	RedisNode = prometheus.NewGaugeVec(
+		prometheus.GaugeOpts{
+			Name: "redis_node",
+			Help: "redis_node",
+		}, clusterLabels)
+	prometheus.MustRegister(RedisNode)
+	RedisNodeGreen = prometheus.NewGaugeVec(
+		prometheus.GaugeOpts{
+			Name: "redis_node_green",
+			Help: "redis_node_green",
+		}, clusterLabels)
+
+	prometheus.MustRegister(RedisNodeGreen)
 	// metrics
 	metrics()
 }

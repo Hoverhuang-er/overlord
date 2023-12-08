@@ -71,9 +71,10 @@ func NewHandler(p *Proxy, cc *ClusterConfig, conn net.Conn, forwarder proto.Forw
 	case types.CacheTypeMemcacheBinary:
 		h.pc = mcbin.NewProxyConn(h.conn)
 	case types.CacheTypeRedis:
-		h.pc = redis.NewProxyConn(h.conn, h.cc.Password)
+		//h.pc = redis.NewProxyConn(h.conn, h.cc.Password)
+		h.pc = redis.NewProxyConnV2(h.conn, h.cc)
 	case types.CacheTypeRedisCluster:
-		h.pc = rclstr.NewProxyConn(h.conn, forwarder, h.cc.Password)
+		h.pc = rclstr.NewProxyConn(h.conn, forwarder, h.cc.Password, cc)
 	default:
 		panic(types.ErrNoSupportCacheType)
 	}
