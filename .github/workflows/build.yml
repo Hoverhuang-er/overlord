@@ -243,8 +243,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [linux,darwin, windows]
-        arch: [amd64, arm64]
+        os: [linux]
+        arch: [amd64]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

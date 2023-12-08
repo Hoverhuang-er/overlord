@@ -4,6 +4,7 @@ ARG TARGETARCH
 ARG TARGETOS
 WORKDIR /opt
 COPY . .
+RUN ls -lath
 RUN go mod tidy
 RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /opt/${DIR} ./cmd/${DIR}
 FROM debian:trixie-slim as final
