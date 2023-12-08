@@ -61,7 +61,7 @@ const (
 	RDBModuleOpcodeString = 5
 )
 
-// NewRDB build.yaml new rdb from reader
+// NewRDB build.yml new rdb from reader
 func NewRDB(rd *bufio.Reader, cb RDBCallback) *RDB {
 	r := &RDB{
 		rd: rd,
