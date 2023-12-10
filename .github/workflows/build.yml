@@ -15,262 +15,262 @@ env:
   TAG: 3.0.0
 
 jobs:
-  apicli:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ linux ]
-        arch: [ amd64 ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
-      - name: Login to ghcr
-        uses: docker/login-action@v3
-        with:
-
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:apicli-${{ env.TAG }}
-          build-args: |
-            TAG=${{ github.ref }}
-            TARGETARCH=${{ matrix.arch }}
-            TARGETOS=${{ matrix.os }}
-            DIR=apicli
-  scheduler:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ linux ]
-        arch: [ amd64 ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-      - name: Login to ghcr
-        uses: docker/login-action@v2
-        with:
-           
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:scheduler-${{ env.TAG }}
-          build-args: |
-            TAG=${{ github.ref }}
-            TARGETARCH=${{ matrix.arch }}
-            TARGETOS=${{ matrix.os }}
-            DIR=scheduler
-  executor:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ linux ]
-        arch: [ amd64 ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-      - name: Login to ghcr
-        uses: docker/login-action@v2
-        with:
-           
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:executor-${{ env.TAG }}
-          build-args: |
-            TAG=${{ github.ref }}
-            TARGETARCH=${{ matrix.arch }}
-            TARGETOS=${{ matrix.os }}
-            DIR=executor
-  balancer:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ linux ]
-        arch: [ amd64 ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-      - name: Login to ghcr
-        uses: docker/login-action@v2
-        with:
-           
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:balancer-${{ env.TAG }}
-          build-args: |
-            TAG=${{ github.ref }}
-            TARGETARCH=${{ matrix.arch }}
-            TARGETOS=${{ matrix.os }}
-            DIR=balancer
-  apiserver:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ linux ]
-        arch: [ amd64 ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-      - name: Login to ghcr
-        uses: docker/login-action@v2
-        with:
-           
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:apiserver-${{ env.TAG }}
-          build-args: |
-            TAG=${{ github.ref }}
-            TARGETARCH=${{ matrix.arch }}
-            TARGETOS=${{ matrix.os }}
-            DIR=apiserver
-  enri:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ linux ]
-        arch: [ amd64 ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-      - name: Login to ghcr
-        uses: docker/login-action@v2
-        with:
-           
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:enri-${{ env.TAG }}
-          build-args: |
-            TAG=${{ github.ref }}
-            TARGETARCH=${{ matrix.arch }}
-            TARGETOS=${{ matrix.os }}
-            DIR=enri
-  proxy:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ linux ]
-        arch: [ amd64 ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-      - name: Login to ghcr
-        uses: docker/login-action@v2
-        with:
-           
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:proxy-${{ env.TAG }}
-          build-args: |
-            TAG=${{ github.ref }}
-            TARGETARCH=${{ matrix.arch }}
-            TARGETOS=${{ matrix.os }}
-            DIR=proxy
-  anzi:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [linux]
-        arch: [amd64]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --force --tags
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
-      - name: Login to ghcr
-        uses: docker/login-action@v2
-        with:
-           
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          file: Dockerfile
-          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:anzi-${{ env.TAG }}
-          build-args: |
-            TAG=${{ github.ref }}
-            TARGETARCH=${{ matrix.arch }}
-            TARGETOS=${{ matrix.os }}
-            DIR=anzi
+#  apicli:
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        os: [ linux ]
+#        arch: [ amd64 ]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: git fetch --force --tags
+#      - uses: docker/setup-qemu-action@v3
+#      - uses: docker/setup-buildx-action@v3
+#      - name: Login to ghcr
+#        uses: docker/login-action@v3
+#        with:
+#
+#          username: ${{ secrets.DOCKER_USER }}
+#          password: ${{ secrets.DOCKER_TOKEN }}
+#      - name: Build and push
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          push: true
+#          file: Dockerfile
+#          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:apicli-${{ env.TAG }}
+#          build-args: |
+#            TAG=${{ github.ref }}
+#            TARGETARCH=${{ matrix.arch }}
+#            TARGETOS=${{ matrix.os }}
+#            DIR=apicli
+#  scheduler:
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        os: [ linux ]
+#        arch: [ amd64 ]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: git fetch --force --tags
+#      - uses: docker/setup-qemu-action@v1
+#      - uses: docker/setup-buildx-action@v1
+#      - name: Login to ghcr
+#        uses: docker/login-action@v2
+#        with:
+#
+#          username: ${{ secrets.DOCKER_USER }}
+#          password: ${{ secrets.DOCKER_TOKEN }}
+#      - name: Build and push
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          file: Dockerfile
+#          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:scheduler-${{ env.TAG }}
+#          build-args: |
+#            TAG=${{ github.ref }}
+#            TARGETARCH=${{ matrix.arch }}
+#            TARGETOS=${{ matrix.os }}
+#            DIR=scheduler
+#  executor:
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        os: [ linux ]
+#        arch: [ amd64 ]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: git fetch --force --tags
+#      - uses: docker/setup-qemu-action@v1
+#      - uses: docker/setup-buildx-action@v1
+#      - name: Login to ghcr
+#        uses: docker/login-action@v2
+#        with:
+#
+#          username: ${{ secrets.DOCKER_USER }}
+#          password: ${{ secrets.DOCKER_TOKEN }}
+#      - name: Build and push
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          file: Dockerfile
+#          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:executor-${{ env.TAG }}
+#          build-args: |
+#            TAG=${{ github.ref }}
+#            TARGETARCH=${{ matrix.arch }}
+#            TARGETOS=${{ matrix.os }}
+#            DIR=executor
+#  balancer:
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        os: [ linux ]
+#        arch: [ amd64 ]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: git fetch --force --tags
+#      - uses: docker/setup-qemu-action@v1
+#      - uses: docker/setup-buildx-action@v1
+#      - name: Login to ghcr
+#        uses: docker/login-action@v2
+#        with:
+#
+#          username: ${{ secrets.DOCKER_USER }}
+#          password: ${{ secrets.DOCKER_TOKEN }}
+#      - name: Build and push
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          file: Dockerfile
+#          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:balancer-${{ env.TAG }}
+#          build-args: |
+#            TAG=${{ github.ref }}
+#            TARGETARCH=${{ matrix.arch }}
+#            TARGETOS=${{ matrix.os }}
+#            DIR=balancer
+#  apiserver:
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        os: [ linux ]
+#        arch: [ amd64 ]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: git fetch --force --tags
+#      - uses: docker/setup-qemu-action@v1
+#      - uses: docker/setup-buildx-action@v1
+#      - name: Login to ghcr
+#        uses: docker/login-action@v2
+#        with:
+#
+#          username: ${{ secrets.DOCKER_USER }}
+#          password: ${{ secrets.DOCKER_TOKEN }}
+#      - name: Build and push
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          file: Dockerfile
+#          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:apiserver-${{ env.TAG }}
+#          build-args: |
+#            TAG=${{ github.ref }}
+#            TARGETARCH=${{ matrix.arch }}
+#            TARGETOS=${{ matrix.os }}
+#            DIR=apiserver
+#  enri:
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        os: [ linux ]
+#        arch: [ amd64 ]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: git fetch --force --tags
+#      - uses: docker/setup-qemu-action@v1
+#      - uses: docker/setup-buildx-action@v1
+#      - name: Login to ghcr
+#        uses: docker/login-action@v2
+#        with:
+#
+#          username: ${{ secrets.DOCKER_USER }}
+#          password: ${{ secrets.DOCKER_TOKEN }}
+#      - name: Build and push
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          file: Dockerfile
+#          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:enri-${{ env.TAG }}
+#          build-args: |
+#            TAG=${{ github.ref }}
+#            TARGETARCH=${{ matrix.arch }}
+#            TARGETOS=${{ matrix.os }}
+#            DIR=enri
+#  proxy:
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        os: [ linux ]
+#        arch: [ amd64 ]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: git fetch --force --tags
+#      - uses: docker/setup-qemu-action@v1
+#      - uses: docker/setup-buildx-action@v1
+#      - name: Login to ghcr
+#        uses: docker/login-action@v2
+#        with:
+#
+#          username: ${{ secrets.DOCKER_USER }}
+#          password: ${{ secrets.DOCKER_TOKEN }}
+#      - name: Build and push
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          file: Dockerfile
+#          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:proxy-${{ env.TAG }}
+#          build-args: |
+#            TAG=${{ github.ref }}
+#            TARGETARCH=${{ matrix.arch }}
+#            TARGETOS=${{ matrix.os }}
+#            DIR=proxy
+#  anzi:
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        os: [linux]
+#        arch: [amd64]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: git fetch --force --tags
+#      - uses: docker/setup-qemu-action@v1
+#      - uses: docker/setup-buildx-action@v1
+#      - name: Login to ghcr
+#        uses: docker/login-action@v2
+#        with:
+#
+#          username: ${{ secrets.DOCKER_USER }}
+#          password: ${{ secrets.DOCKER_TOKEN }}
+#      - name: Build and push
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          file: Dockerfile
+#          tags: docker.io/${{ secrets.DOCKER_USER }}/overlord:anzi-${{ env.TAG }}
+#          build-args: |
+#            TAG=${{ github.ref }}
+#            TARGETARCH=${{ matrix.arch }}
+#            TARGETOS=${{ matrix.os }}
+#            DIR=anzi
   gui:
     strategy:
       fail-fast: true
@@ -278,7 +278,7 @@ jobs:
         os: [ linux ]
         arch: [ amd64 ]
     runs-on: ubuntu-latest
-    needs: [proxy, anzi, enri, apiserver, balancer, executor, scheduler, apicli]
+#    needs: [proxy, anzi, enri, apiserver, balancer, executor, scheduler, apicli]
     steps:
       - uses: actions/checkout@v4
         with:
