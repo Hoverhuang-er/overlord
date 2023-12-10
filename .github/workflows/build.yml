@@ -294,7 +294,7 @@ jobs:
         os: [ linux ]
         arch: [ amd64 ]
     runs-on: ubuntu-latest
-#    needs: [proxy, anzi, enri, apiserver, balancer, executor, scheduler, apicli]
+    needs: [proxy, anzi, enri, apiserver, balancer, executor, scheduler, apicli]
     steps:
       - uses: actions/checkout@v4
         with:
