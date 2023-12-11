@@ -206,7 +206,7 @@ func (c *cluster) tryFetch() bool {
 		default:
 			log.Infof("Connect redis with auth")
 			conn := libnet.DialWithTimeoutWithAuth(server, c.password, c.dto, c.rto, c.wto)
-			f := newFetcher(conn)
+			f := newFetcherWhAuth(conn, c)
 			nSlots, err := f.fetch()
 			if err != nil {
 				if log.V(1) {
