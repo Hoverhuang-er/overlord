@@ -123,6 +123,7 @@ func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 		err = errors.WithStack(err)
 		return
 	}
+	log.Info("Write Auth CMD to Redis")
 	var authdata []byte
 	begin1 := f.br.Mark()
 	for {
@@ -157,6 +158,7 @@ func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 		err = errors.WithStack(err)
 		return
 	}
+	log.Info("Write Cluster Nodes CMD to Redis")
 	var data []byte
 	begin := f.br.Mark()
 	for {
