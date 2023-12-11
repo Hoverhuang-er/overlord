@@ -45,6 +45,7 @@ var (
 	}
 	// ErrBadReplyType error bad reply type
 	ErrBadReplyType = errs.New("fetcher CLUSTER NODES bad reply type")
+	ErrNotEqualOk   = errs.New("fetcher REDIS Node Auth not equal ok")
 )
 
 // newFetcher will create new fetcher
@@ -122,6 +123,32 @@ func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 		err = errors.WithStack(err)
 		return
 	}
+	var authdata []byte
+	begin1 := f.br.Mark()
+	for {
+		err = f.br.Read()
+		if err != nil {
+			err = errors.WithStack(err)
+			return
+		}
+		reply := &redis.RESP{}
+		if err = reply.Decode(f.br); err == bufio.ErrBufferFull {
+			f.br.AdvanceTo(begin1)
+			continue
+		} else if err != nil {
+			err = errors.WithStack(err)
+			return
+		}
+		if reply.Type() != respFetch {
+			err = errors.WithStack(ErrNotEqualOk)
+			return
+		}
+		authdata = reply.Data()
+		idx := bytes.Index(authdata, crlfBytes)
+		authdata = authdata[idx+2:]
+		break
+	}
+	log.Infof("Auth data is %s", authdata)
 	if err = f.bw.Write(cmdClusterNodesBytes); err != nil {
 		err = errors.WithStack(err)
 		return
