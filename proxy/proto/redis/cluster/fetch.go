@@ -3,6 +3,7 @@ package cluster
 import (
 	"bytes"
 	errs "errors"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
 	"strconv"
 
 	"github.com/Hoverhuang-er/overlord/pkg/bufio"
@@ -112,6 +113,12 @@ func (f *fetcher) fetch() (ns *nodeSlots, err error) {
 // Fetch new CLUSTER NODES result
 func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 	if err = f.bw.Write(cmdAuthBytes(f.auth.password)); err != nil {
+		log.Errorf("Failed to auth with password :%v", err)
+		err = errors.WithStack(err)
+		return
+	}
+	if err = f.bw.Flush(); err != nil {
+		log.Errorf("Failed to auth with password :%v", err)
 		err = errors.WithStack(err)
 		return
 	}
