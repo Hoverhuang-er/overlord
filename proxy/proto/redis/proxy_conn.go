@@ -65,7 +65,7 @@ func NewProxyConn(conn *libnet.Conn, password string) proto.ProxyConn {
 // NewProxyConnV2 create new redis Encoder and Decoder with Option
 // Option 1: use password to auth and load password from config file
 // Option 2: emulated redis cluster to auth
-func NewProxyConnV2(conn *libnet.Conn, cca, ccert, cpasswd string, useTls bool) (r proto.ProxyConn) {
+func NewProxyConnV2(conn *libnet.Conn, cpasswd string, useTls bool) (r proto.ProxyConn) {
 	if useTls {
 		// TODO: use tls
 		return nil

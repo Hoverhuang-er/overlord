@@ -72,7 +72,7 @@ func NewHandler(p *Proxy, cc *ClusterConfig, conn net.Conn, forwarder proto.Forw
 		h.pc = mcbin.NewProxyConn(h.conn)
 	case types.CacheTypeRedis:
 		//h.pc = redis.NewProxyConn(h.conn, h.cc.Password)
-		h.pc = redis.NewProxyConnV2(h.conn, cc.ToRedis.Auth.CaFile, cc.ToRedis.Auth.CertFile, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)
+		h.pc = redis.NewProxyConnV2(h.conn, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)
 	case types.CacheTypeRedisCluster:
 		//h.pc = rclstr.NewProxyConn(h.conn, forwarder, h.cc.Password, cc)
 		h.pc = rclstr.NewProxyConnV2(h.conn, forwarder, cc.ToRedis.Auth.CaFile, cc.ToRedis.Auth.CertFile, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)

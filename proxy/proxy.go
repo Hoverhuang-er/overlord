@@ -193,7 +193,7 @@ func (p *Proxy) acceptV2(cc *ClusterConfig, l net.Listener, forwarder proto.Forw
 					encoder = mcbin.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second))
 				case types.CacheTypeRedis:
 					//encoder = redis.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), cc.Password)
-					encoder = redis.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), cc.ToRedis.Auth.CaFile, cc.ToRedis.Auth.CertFile, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)
+					encoder = redis.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)
 				case types.CacheTypeRedisCluster:
 					//encoder = rclstr.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), nil, cc.Password, cc)
 					encoder = rclstr.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), nil, cc.ToRedis.Auth.CaFile, cc.ToRedis.Auth.CertFile, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)

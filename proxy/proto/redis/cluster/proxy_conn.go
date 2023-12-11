@@ -39,7 +39,7 @@ func NewProxyConn(conn *libnet.Conn, fer proto.Forwarder, password string) proto
 	r := &proxyConn{
 		c: c,
 		//pc:       redis.NewProxyConn(conn, password),
-		//pc:       redis.NewProxyConnV2(conn, cca, ccert, cpasswd, useTls),
+		pc:       redis.NewProxyConnV2(conn, password, false),
 		password: password,
 	}
 	if password != "" {
@@ -60,7 +60,7 @@ func NewProxyConnV2(conn *libnet.Conn, fer proto.Forwarder, cca, ccert, cpasswd 
 	r := &proxyConn{
 		c: c,
 		//pc:       redis.NewProxyConn(conn, password),
-		pc:       redis.NewProxyConnV2(conn, cca, ccert, cpasswd, useTls),
+		pc:       redis.NewProxyConnV2(conn, cpasswd, useTls),
 		password: cpasswd,
 	}
 	return r
@@ -108,6 +108,7 @@ func (pc *proxyConn) Flush() (err error) {
 func (pc *proxyConn) CmdCheck(m *proto.Message) (bool, error) {
 	isSpecialCmd, err := pc.pc.CmdCheck(m)
 	pc.authorized = pc.pc.IsAuthorized()
+	pc.password = pc.GetPassword()
 	return isSpecialCmd, err
 }
 
