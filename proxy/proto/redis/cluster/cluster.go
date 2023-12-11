@@ -193,9 +193,8 @@ func (c *cluster) tryFetch() bool {
 			f := newFetcher(conn)
 			nSlots, err := f.fetch()
 			if err != nil {
-				if log.V(1) {
-					log.Errorf("Redis Cluster fail to fetch error:%v", err)
-				}
+				log.Errorf("Redis Cluster fail to fetch error:%v", err)
+
 				continue
 			}
 			connectedNode++
@@ -208,9 +207,8 @@ func (c *cluster) tryFetch() bool {
 			f := newFetcherWhAuth(conn, c)
 			nSlots, err := f.fetchAuth()
 			if err != nil {
-				if log.V(1) {
-					log.Errorf("Redis Cluster fail to fetch error:%v", err)
-				}
+				log.Errorf("Redis Cluster fail to fetch error:%v", err)
+
 				continue
 			}
 			connectedNode++
@@ -221,9 +219,8 @@ func (c *cluster) tryFetch() bool {
 		log.Infof("Redis Cluster NodeConnected (%d/%d) already connect", connectedNode, len(shuffleMap))
 		return true
 	}
-	if log.V(1) {
-		log.Error("Redis Cluster all seed nodes fail to fetch")
-	}
+	log.Error("Redis Cluster all seed nodes fail to fetch")
+
 	return false
 }
 
