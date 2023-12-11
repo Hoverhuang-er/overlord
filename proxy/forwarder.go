@@ -299,9 +299,7 @@ func (c *connections) processPing(p *pinger) {
 				if del {
 					del = false
 					c.ring.AddNode(p.alias, p.weight)
-					if log.V(4) {
-						log.Infof("node ping node:%s addr:%s success and readd", p.alias, p.addr)
-					}
+					log.Infof("node ping node:%s addr:%s success and readd", p.alias, p.addr)
 				}
 				time.Sleep(pingSleepTime(false))
 				continue

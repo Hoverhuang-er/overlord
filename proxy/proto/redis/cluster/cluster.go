@@ -95,7 +95,7 @@ func NewForwarderWithAuth(name, listen, password string, servers []string, conns
 	}
 	if !c.tryFetch() {
 		_ = c.Close()
-		log.Warnf("fail to init fetch cluster all seeds nodes cluster down but continue")
+		log.Warn("fail to init fetch cluster all seeds nodes cluster down but continue")
 		return c
 	}
 	c.fake(listen)
@@ -200,9 +200,8 @@ func (c *cluster) tryFetch() bool {
 			}
 			connectedNode++
 			c.initSlotNode(nSlots)
-			if log.V(4) {
-				log.Info("Redis Cluster try fetch success")
-			}
+			log.Warn("Redis Cluster try fetch success")
+
 		default:
 			log.Infof("Connect redis with auth")
 			conn := libnet.DialWithTimeoutWithAuth(server, c.password, c.dto, c.rto, c.wto)
@@ -216,9 +215,8 @@ func (c *cluster) tryFetch() bool {
 			}
 			connectedNode++
 			c.initSlotNode(nSlots)
-			if log.V(4) {
-				log.Info("Redis Cluster try fetch success")
-			}
+			log.Warn("Redis Cluster try fetch success")
+
 		}
 		log.Infof("Redis Cluster NodeConnected (%d/%d) already connect", connectedNode, len(shuffleMap))
 		return true
@@ -248,9 +246,7 @@ func (c *cluster) initSlotNode(nSlots *nodeSlots) {
 				return newNodeConn(c, toAddr)
 			})
 			go c.pipeEvent(ncp.ErrorEvent())
-			if log.V(4) {
-				log.Infof("Redis Cluster renew slot node and add addr:%s", toAddr)
-			}
+			log.Warnf("Redis Cluster renew slot node and add addr:%s", toAddr)
 		} else {
 			delete(oncp, addr)
 		}
@@ -260,9 +256,7 @@ func (c *cluster) initSlotNode(nSlots *nodeSlots) {
 	c.slotNode.Store(sn)
 	for addr, ncp := range oncp {
 		ncp.Close()
-		if log.V(4) {
-			log.Infof("Redis Cluster renew slot node and close addr:%s", addr)
-		}
+		log.Warnf("Redis Cluster renew slot node and close addr:%s", addr)
 	}
 }
 

@@ -85,9 +85,8 @@ func (nc *nodeConn) Read(m *proto.Message) (err error) {
 		return
 	}
 	if nc.redirects >= maxRedirects { // NOTE: check max redirects
-		if log.V(4) {
-			log.Infof("Redis Cluster NodeConn key(%s) already max redirects", req.Key())
-		}
+		log.Warnf("Redis Cluster NodeConn key(%s) already max redirects", req.Key())
+
 		return
 	}
 	data := reply.Data()
