@@ -148,7 +148,7 @@ servers = [
 ]
 # Require clients to issue AUTH <PASSWORD> before processing any other commands.
 password = ""
-[clusters.auth]
+[redisCluster.auth]
 # If use_tls is true, the client will use TLS to connect to the server. else use password to auth.
 use_tls = false
 # The path to the client certificate file.

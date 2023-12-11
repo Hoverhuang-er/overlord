@@ -20,7 +20,7 @@ write_timeout = 0
 max_connections = 0
 # proxy support prometheus metrics. By default, we use it.
 use_metrics = true
-[clusters.auth]
+[redisCluster.auth]
 # If use_tls is true, the client will use TLS to connect to the server. else use password to auth.
 use_tls = false
 # The path to the client certificate file.

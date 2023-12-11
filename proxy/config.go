@@ -79,8 +79,13 @@ type ClusterConfig struct {
 	SlowlogSlowerThan int             `toml:"slowlog_slower_than"`
 	Servers           []string        `toml:"servers"`
 	Password          string          `toml:"password"`
-	Auth              Auth            `toml:"auth"`
+	RedisCluster      RedisCluster    `toml:"redisCluster"`
 }
+
+type RedisCluster struct {
+	Auth Auth `toml:"auth"`
+}
+
 type Auth struct {
 	UseTLS   bool   `toml:"use_tls"`
 	CertFile string `toml:"cert_file"`

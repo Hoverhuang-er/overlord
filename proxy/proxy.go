@@ -110,10 +110,10 @@ func (p *Proxy) accept(cc *ClusterConfig, l net.Listener, forwarder proto.Forwar
 					encoder = mcbin.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second))
 				case types.CacheTypeRedis:
 					//encoder = redis.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), cc.Password)
-					encoder = redis.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), cc.Auth.CaFile, cc.Auth.CertFile, cc.Auth.Password, cc.Auth.UseTLS)
+					encoder = redis.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), cc.RedisCluster.Auth.CaFile, cc.RedisCluster.Auth.CertFile, cc.RedisCluster.Auth.Password, cc.RedisCluster.Auth.UseTLS)
 				case types.CacheTypeRedisCluster:
 					//encoder = rclstr.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), nil, cc.Password, cc)
-					encoder = rclstr.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), nil, cc.Auth.CaFile, cc.Auth.CertFile, cc.Auth.Password, cc.Auth.UseTLS)
+					encoder = rclstr.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), nil, cc.RedisCluster.Auth.CaFile, cc.RedisCluster.Auth.CertFile, cc.RedisCluster.Auth.Password, cc.RedisCluster.Auth.UseTLS)
 				}
 				if encoder != nil {
 					_ = encoder.Encode(proto.ErrMessage(ErrProxyMoreMaxConns))
