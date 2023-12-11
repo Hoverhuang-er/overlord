@@ -71,7 +71,7 @@ func NewProxyConnV2(conn *libnet.Conn, cca, ccert, cpasswd string, useTls bool) 
 	} else {
 		// Use password to auth
 		if cpasswd == "" {
-			logrus.Error("redis password is empty, please check config file")
+			logrus.Fatal("Cluster.Auth redis password is empty, please check config file")
 			return nil
 		}
 		return &proxyConn{
