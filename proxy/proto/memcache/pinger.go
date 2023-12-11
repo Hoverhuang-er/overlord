@@ -44,14 +44,14 @@ func (m *mcPinger) Ping() (err error) {
 	}
 	m.bw.Write(pingBytes)
 	if err = m.bw.Flush(); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	_ = m.br.Read()
 	defer m.br.Buffer().Reset()
 	var b []byte
 	if b, err = m.br.ReadLine(); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	if !bytes.Equal(b, pongBytes) {

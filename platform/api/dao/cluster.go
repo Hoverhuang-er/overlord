@@ -19,7 +19,7 @@ import (
 	"go.etcd.io/etcd/client"
 )
 
-// define cluster errors
+// define cluster stackerr
 var (
 	ErrClusterAssigned = errors.New("cluster has be assigned with some appids")
 )

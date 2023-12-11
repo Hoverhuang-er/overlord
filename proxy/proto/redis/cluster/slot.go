@@ -8,7 +8,7 @@ import (
 
 const slotsCount = 16384
 
-// errors
+// stackerr
 var (
 	ErrAbsentField   = errs.New("Node fields is absent")
 	ErrEmptyNodeLine = errs.New("empty line of cluster nodes")

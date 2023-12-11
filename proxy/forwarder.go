@@ -29,7 +29,7 @@ const (
 	forwarderStateClosed  = int32(1)
 )
 
-// errors
+// stackerr
 var (
 	ErrConfigServerFormat  = errs.New("servers config format error")
 	ErrForwarderHashNoNode = errs.New("forwarder hash no hit node")

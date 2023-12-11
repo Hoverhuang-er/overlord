@@ -23,7 +23,7 @@ const (
 	musk = 0x3fff
 )
 
-// errors
+// stackerr
 var (
 	ErrClusterClosed = errs.New("cluster executor already closed")
 )

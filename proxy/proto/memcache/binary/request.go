@@ -237,7 +237,7 @@ var (
 	resopnseStatusInternalErrBytes = []byte{0x00, 0x84}
 )
 
-// errors
+// stackerr
 var (
 	// ERROR means the client sent a nonexistent command name.
 	ErrError = errs.New("ERROR")
@@ -252,7 +252,7 @@ var (
 	// SERVER_ERROR
 	// means some sort of server error prevents the server from carrying
 	// out the command. <error> is a human-readable error string. In cases
-	// of severe server errors, which make it impossible to continue
+	// of severe server stackerr, which make it impossible to continue
 	// serving the client (this shouldn't normally happen), the server will
 	// close the connection after sending the error line. This is the only
 	// case in which the server closes a connection to a client.

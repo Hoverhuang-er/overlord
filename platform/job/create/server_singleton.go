@@ -9,8 +9,6 @@ import (
 	"github.com/Hoverhuang-er/overlord/pkg/types"
 	"strings"
 	"text/template"
-
-	"github.com/pkg/errors"
 )
 
 // define consts
@@ -70,7 +68,7 @@ func (c *CacheJob) buildTplTree() error {
 
 		err = c.e.Set(ctx, fmt.Sprintf("%s/type", instanceDir), string(c.info.CacheType))
 		if err != nil {
-			return errors.WithStack(err)
+			return stackerr.ReplaceErrStack(err)
 		}
 
 		if c.info.CacheType == types.CacheTypeRedis {

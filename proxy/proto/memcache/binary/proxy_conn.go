@@ -70,13 +70,13 @@ NEXTGET:
 	if err == bufio.ErrBufferFull {
 		return
 	} else if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	req := pc.request(m)
 	parseHeader(head, req, true)
 	if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	switch req.respType {
@@ -104,7 +104,7 @@ func (pc *proxyConn) decodeCommon(m *proto.Message, req *MCRequest) (err error) 
 	if err == bufio.ErrBufferFull {
 		return
 	} else if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	el := uint8(req.extraLen[0])

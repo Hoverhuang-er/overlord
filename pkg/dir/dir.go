@@ -7,13 +7,13 @@ import (
 	pkgerr "github.com/pkg/errors"
 )
 
-// define errors
+// define stackerr
 var (
 	ErrNotFile = pkgerr.New("path must be a File")
 	ErrNotDir  = pkgerr.New("path must be a Dir")
 )
 
-//IsExists check if the file or dir was exists
+// IsExists check if the file or dir was exists
 func IsExists(path string) (bool, error) {
 	if os.Getenv("RunMode") == "test" {
 		return true, nil

@@ -2,6 +2,7 @@ package cluster
 
 import (
 	"bytes"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 	"strings"
 	"sync/atomic"
 
@@ -9,8 +10,6 @@ import (
 	"github.com/Hoverhuang-er/overlord/pkg/log"
 	"github.com/Hoverhuang-er/overlord/proxy/proto"
 	"github.com/Hoverhuang-er/overlord/proxy/proto/redis"
-
-	"github.com/pkg/errors"
 )
 
 const (
@@ -61,7 +60,7 @@ func (nc *nodeConn) Cluster() string {
 
 func (nc *nodeConn) Write(m *proto.Message) (err error) {
 	if err = nc.nc.Write(m); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 	}
 	return
 }
@@ -72,7 +71,7 @@ func (nc *nodeConn) Flush() error {
 
 func (nc *nodeConn) Read(m *proto.Message) (err error) {
 	if err = nc.nc.Read(m); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	req := m.Request().(*redis.Request)
@@ -126,22 +125,22 @@ func (nc *nodeConn) redirectProcess(m *proto.Message, req *redis.Request, addr s
 	defer nnc.Close()
 	if isAsk {
 		if err = rnc.Bw().Write(askingResp); err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 	}
 	if err = req.RESP().Encode(rnc.Bw()); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	if err = rnc.Bw().Flush(); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	// NOTE: even if the client waits a long time before reissuing the query, and in the meantime the cluster configuration
 	// changed, the destination node will reply again with a MOVED error if the hash slot is now served by another node.
 	if err = nnc.Read(m); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 	}
 	return
 }

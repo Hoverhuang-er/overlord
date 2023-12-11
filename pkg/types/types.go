@@ -5,7 +5,7 @@ import "errors"
 // CacheType memcache or redis
 type CacheType string
 
-// errors
+// stackerr
 var (
 	ErrNoSupportCacheType = errors.New("unsupported cache type")
 )

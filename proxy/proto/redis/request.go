@@ -48,7 +48,7 @@ func init() {
 	}
 }
 
-// errors
+// stackerr
 var (
 	ErrBadAssert  = errs.New("bad assert for redis")
 	ErrBadCount   = errs.New("bad count number")

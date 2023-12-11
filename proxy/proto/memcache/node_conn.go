@@ -113,12 +113,12 @@ REREAD:
 	var bs []byte
 	if bs, err = n.br.ReadLine(); err == bufio.ErrBufferFull {
 		if err = n.br.Read(); err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		goto REREAD
 	} else if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	if _, ok := withValueTypes[mcr.respType]; !ok || bytes.Equal(bs, endBytes) || bytes.Equal(bs, errorBytes) {
@@ -128,7 +128,7 @@ REREAD:
 	var length int
 
 	if length, err = parseLen(bs, 4); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	ds := length + 2 + len(endBytes)
@@ -138,12 +138,12 @@ REREADData:
 	var data []byte
 	if data, err = n.br.ReadExact(ds); err == bufio.ErrBufferFull {
 		if err = n.br.Read(); err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		goto REREADData
 	} else if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	mcr.data = append(mcr.data, data...)

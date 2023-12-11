@@ -23,7 +23,7 @@ const (
 	RoleSlave  = "slave"
 )
 
-// errors
+// stackerr
 var (
 	ErrNotEnoughHost     = errors.New("host is not enough with")
 	ErrNotEnoughResource = errors.New("resource is not fully satisfied by the offers")

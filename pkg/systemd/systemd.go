@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-// defind errors
+// defind stackerr
 var (
 	ErrNotSupportAction = errors.New("aciton not support")
 )

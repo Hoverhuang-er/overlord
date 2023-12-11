@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-// errors
+// stackerr
 var (
 	ErrNoNode    = errors.New("node not exists in cluster")
 	ErrTrashNode = errors.New("trash nodes")

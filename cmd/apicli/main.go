@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/pkg/errors"
-
 	"github.com/Hoverhuang-er/overlord/pkg/log"
 	"github.com/Hoverhuang-er/overlord/platform/api/model"
 	"github.com/Hoverhuang-er/overlord/version"
@@ -82,7 +80,7 @@ const (
 func createCluster(arg *model.ParamCluster) (err error) {
 	bs, err := json.Marshal(arg)
 	if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	err = newReq(http.MethodPost, server+base, string(bs))
@@ -130,7 +128,7 @@ func newReq(method, url, body string) (err error) {
 	req, err = http.NewRequest(method, url, strings.NewReader(body))
 	resp, err := client.Do(req)
 	if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	defer resp.Body.Close()

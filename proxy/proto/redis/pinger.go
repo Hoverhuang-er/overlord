@@ -16,7 +16,7 @@ const (
 	pingBufferSize = 128
 )
 
-// errors
+// stackerr
 var (
 	ErrPingClosed = errs.New("ping interface has been closed")
 	ErrBadPong    = errs.New("pong response payload is bad")
@@ -53,14 +53,14 @@ func (p *pinger) Ping() (err error) {
 	}
 	_ = p.bw.Write(pingBytes)
 	if err = p.bw.Flush(); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	_ = p.br.Read()
 	defer p.br.Buffer().Reset()
 	data, err := p.br.ReadLine()
 	if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	if !bytes.Equal(data, pongBytes) {

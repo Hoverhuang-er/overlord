@@ -109,12 +109,12 @@ REREAD:
 	var bs []byte
 	if bs, err = n.br.ReadExact(requestHeaderLen); err == bufio.ErrBufferFull {
 		if err = n.br.Read(); err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		goto REREAD
 	} else if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	parseHeader(bs, mcr, false)
@@ -126,12 +126,12 @@ REREADData:
 	var data []byte
 	if data, err = n.br.ReadExact(int(bl)); err == bufio.ErrBufferFull {
 		if err = n.br.Read(); err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		goto REREADData
 	} else if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	mcr.data = append(mcr.data, data...)

@@ -76,7 +76,7 @@ func (pc *proxyConn) decode(m *proto.Message) (err error) {
 	if err == bufio.ErrBufferFull {
 		return
 	} else if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	bg, ed := nextField(line)
@@ -151,7 +151,7 @@ func (pc *proxyConn) decodeStorage(m *proto.Message, bs []byte, mtype RequestTyp
 	// length
 	length, err := parseLen(bs[keyE:], 3)
 	if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 
@@ -162,7 +162,7 @@ func (pc *proxyConn) decodeStorage(m *proto.Message, bs []byte, mtype RequestTyp
 		pc.br.Advance(-((keyE - keyB) + 1 + len(mtype.Bytes())))
 		return
 	} else if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	if !bytes.HasSuffix(data, crlfBytes) {

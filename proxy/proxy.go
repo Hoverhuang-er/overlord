@@ -23,7 +23,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// proxy errors
+// proxy stackerr
 var (
 	ErrProxyMoreMaxConns = errs.New("Proxy accept more than max connextions")
 	ErrProxyReloadIgnore = errs.New("Proxy reload cluster config is ignored")
@@ -47,7 +47,7 @@ type Proxy struct {
 // New new a proxy by config.
 func New(c *Config) (p *Proxy, err error) {
 	if err = c.Validate(); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	p = &Proxy{}

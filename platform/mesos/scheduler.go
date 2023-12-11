@@ -340,7 +340,7 @@ func (s *Scheduler) tryRecovery(t ms.TaskID, offers []ms.Offer, force bool) (err
 		info.Dist.Addrs = append(info.Dist.Addrs, newDist.Addrs...)
 		err = s.acceptOffer(info, newDist, offers)
 		if err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		ctask := create.NewCacheJob(s.db, info)
@@ -395,7 +395,7 @@ func (s *Scheduler) acceptOffer(info *create.CacheInfo, dist *chunk.Dist, offers
 		accept := calls.Accept(calls.OfferOperations{calls.OpLaunch(tasks[offer.Hostname]...)}.WithOffers(offer.ID))
 		err = calls.CallNoData(context.Background(), s.cli, accept)
 		if err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 	}
@@ -486,7 +486,7 @@ func (s *Scheduler) dispatchCluster(t job.Job, num int, mem, cpu float64, offers
 		)
 		ci, err = s.getInfoFromEtcd(context.Background(), t.Name)
 		if err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		chunks = ci.Chunks
@@ -557,7 +557,7 @@ func (s *Scheduler) dispatchCluster(t job.Job, num int, mem, cpu float64, offers
 		accept := calls.Accept(calls.OfferOperations{calls.OpLaunch(tasks[offer.Hostname]...)}.WithOffers(offer.ID))
 		err = calls.CallNoData(context.Background(), s.cli, accept)
 		if err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 	}
@@ -575,7 +575,7 @@ func (s *Scheduler) dispatchSingleton(t job.Job, offers []ms.Offer) (err error) 
 	case job.OpCreate:
 		dist, err = chunk.DistIt(t.Num, t.MaxMem, t.CPU, offers...)
 		if err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		jobDist = dist
@@ -588,7 +588,7 @@ func (s *Scheduler) dispatchSingleton(t job.Job, offers []ms.Offer) (err error) 
 		)
 		ci, err = s.getInfoFromEtcd(context.Background(), t.Name)
 		if err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		dist = ci.Dist
@@ -596,7 +596,7 @@ func (s *Scheduler) dispatchSingleton(t job.Job, offers []ms.Offer) (err error) 
 		if delta >= 0 {
 			newDist, err = chunk.DistAppendIt(dist, t.Num, t.MaxMem, t.CPU, offers...)
 			if err != nil {
-				err = errors.WithStack(err)
+				err = stackerr.ReplaceErrStack(err)
 				return
 			}
 			jobDist = newDist
@@ -614,7 +614,7 @@ func (s *Scheduler) dispatchSingleton(t job.Job, offers []ms.Offer) (err error) 
 		)
 		ci, err = s.getInfoFromEtcd(context.Background(), t.Name)
 		if err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 		var alias = make([]string, 0)
@@ -642,7 +642,7 @@ func (s *Scheduler) dispatchSingleton(t job.Job, offers []ms.Offer) (err error) 
 		num := len(alias)
 		newDist, err = chunk.DistAppendIt(ci.Dist, num, ci.MaxMemory, ci.CPU, offers...)
 		if err != nil {
-			err = errors.WithStack(err)
+			err = stackerr.ReplaceErrStack(err)
 			return
 		}
 
@@ -668,11 +668,11 @@ func (s *Scheduler) dispatchSingleton(t job.Job, offers []ms.Offer) (err error) 
 	ctask := create.NewCacheJob(s.db, ci)
 	err = ctask.Create()
 	if err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 		return
 	}
 	if err = s.acceptOffer(ci, jobDist, offers); err != nil {
-		err = errors.WithStack(err)
+		err = stackerr.ReplaceErrStack(err)
 	}
 	return
 }

@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-// defined common errors
+// defined common stackerr
 var (
 	ErrQuit = errors.New("close client conn")
 )

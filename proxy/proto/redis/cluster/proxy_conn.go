@@ -18,7 +18,7 @@ var (
 	notSupportBytes = []byte("-Error: command not support\r\n")
 )
 
-// errors
+// stackerr
 var (
 	ErrInvalidArgument = errs.New("cluster command with wrong argument")
 )
