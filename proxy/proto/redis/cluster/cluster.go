@@ -263,9 +263,8 @@ func (c *cluster) pipeEvent(errCh <-chan error) {
 		if !ok {
 			return
 		}
-		if log.V(2) {
-			log.Errorf("Redis Cluster NodeConnPipe action error:%v", err)
-		}
+		log.Errorf("Redis Cluster NodeConnPipe action error:%v", err)
+
 		c.action <- struct{}{}
 	}
 }

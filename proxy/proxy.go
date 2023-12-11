@@ -281,9 +281,8 @@ func (p *Proxy) MonitorConfChange(ccf string) {
 				log.Infof("watcher file:%s occurs event:%s and reload finish", ev.Name, ev.String())
 				continue
 			}
-			if log.V(5) {
-				log.Infof("watcher file:%s occurs event:%s and ignore", ev.Name, ev.String())
-			}
+			log.Warnf("watcher file:%s occurs event:%s and ignore", ev.Name, ev.String())
+
 		case err := <-watch.Errors:
 			log.Errorf("watcher dir:%s get error:%v", absPath, err)
 			return

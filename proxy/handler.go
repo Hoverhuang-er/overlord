@@ -193,7 +193,7 @@ func (h *Handler) closeWithError(err error) {
 		if prom.On {
 			prom.ConnDecr(h.cc.Name)
 		}
-		if log.V(2) && errors.Cause(err) != io.EOF {
+		if errors.Cause(err) != io.EOF {
 			log.Warnf("cluster(%s) addr(%s) remoteAddr(%s) handler close error:%+v", h.cc.Name, h.cc.ListenAddr, h.conn.RemoteAddr(), err)
 		}
 	}

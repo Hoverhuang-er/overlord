@@ -311,9 +311,8 @@ func (c *connections) processPing(p *pinger) {
 			}
 
 			p.failure++
-			if log.V(3) {
-				log.Warnf("ping node:%s addr:%s fail:%d times with err:%v", p.alias, p.addr, p.failure, err)
-			}
+			log.Warnf("ping node:%s addr:%s fail:%d times with err:%v", p.alias, p.addr, p.failure, err)
+
 			if p.failure < c.cc.PingFailLimit {
 				time.Sleep(pingSleepTime(false))
 				p.ping = newPingConn(p.cc, p.addr)
@@ -325,10 +324,8 @@ func (c *connections) processPing(p *pinger) {
 					prom.ErrIncr(c.cc.Name, p.addr, "ping", "del node")
 				}
 				del = true
-				if log.V(2) {
-					log.Errorf("ping node:%s addr:%s fail times:%d ge to limit:%d then del", p.alias, p.addr, p.failure, c.cc.PingFailLimit)
-				}
-			} else if log.V(3) {
+				log.Errorf("ping node:%s addr:%s fail times:%d ge to limit:%d then del", p.alias, p.addr, p.failure, c.cc.PingFailLimit)
+
 				log.Errorf("ping node:%s addr:%s fail times:%d ge to limit:%d and already deled", p.alias, p.addr, p.failure, c.cc.PingFailLimit)
 			}
 			time.Sleep(pingSleepTime(true))

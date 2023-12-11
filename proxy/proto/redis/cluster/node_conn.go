@@ -106,7 +106,7 @@ func (nc *nodeConn) Read(m *proto.Message) (err error) {
 	nc.sb.Write(addrBs)
 	addr := nc.sb.String()
 	// redirect process
-	if err = nc.redirectProcess(m, req, addr, isAsk); err != nil && log.V(2) {
+	if err = nc.redirectProcess(m, req, addr, isAsk); err != nil {
 		log.Errorf("Redis Cluster NodeConn redirectProcess addr:%s error:%v", addr, err)
 	}
 	nc.redirects = 0
@@ -116,9 +116,8 @@ func (nc *nodeConn) Read(m *proto.Message) (err error) {
 func (nc *nodeConn) redirectProcess(m *proto.Message, req *redis.Request, addr string, isAsk bool) (err error) {
 	// next redirect
 	nc.redirects++
-	if log.V(5) {
-		log.Infof("Redis Cluster NodeConn key(%s) redirect count(%d)", req.Key(), nc.redirects)
-	}
+	log.Warnf("Redis Cluster NodeConn key(%s) redirect count(%d)", req.Key(), nc.redirects)
+
 	// start redirect
 	nnc := newNodeConn(nc.c, addr)
 	tmp := nnc.(*nodeConn)
