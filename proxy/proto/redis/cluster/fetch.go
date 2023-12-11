@@ -7,6 +7,7 @@ import (
 	"github.com/Hoverhuang-er/overlord/pkg/bufio"
 	"github.com/Hoverhuang-er/overlord/pkg/log"
 	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 	"github.com/Hoverhuang-er/overlord/proxy/proto/redis"
 
 	"github.com/pkg/errors"

@@ -2,6 +2,7 @@ package memcache
 
 import (
 	"bytes"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 
 	"github.com/Hoverhuang-er/overlord/pkg/bufio"
 	"github.com/Hoverhuang-er/overlord/pkg/conv"
@@ -166,7 +167,7 @@ func (pc *proxyConn) decodeStorage(m *proto.Message, bs []byte, mtype RequestTyp
 		return
 	}
 	if !bytes.HasSuffix(data, crlfBytes) {
-		err = errors.WithStack(ErrBadRequest)
+		err = stackerr.ReplaceErrStack(ErrBadRequest)
 		return
 	}
 

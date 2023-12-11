@@ -2,6 +2,7 @@ package redis
 
 import (
 	errs "errors"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 	"sync/atomic"
 	"time"
 

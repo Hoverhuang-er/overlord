@@ -3,6 +3,7 @@ package redis
 import (
 	"bytes"
 	errs "errors"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 	"sync/atomic"
 
 	"github.com/Hoverhuang-er/overlord/pkg/bufio"

@@ -3,6 +3,7 @@ package binary
 import (
 	"bytes"
 	"encoding/binary"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 
 	"github.com/Hoverhuang-er/overlord/pkg/bufio"
 	libnet "github.com/Hoverhuang-er/overlord/pkg/net"

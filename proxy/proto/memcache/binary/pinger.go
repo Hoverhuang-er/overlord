@@ -2,6 +2,7 @@ package binary
 
 import (
 	"bytes"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 	"sync/atomic"
 
 	"github.com/Hoverhuang-er/overlord/pkg/bufio"
