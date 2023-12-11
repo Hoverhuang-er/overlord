@@ -179,6 +179,11 @@ func (m *Message) MarkAddr(addr string) {
 	m.addr = addr
 }
 
+// MarkPasswd ...
+func (m *Message) MarkPasswd(passwd string) {
+	m.passwd = passwd
+}
+
 // ResetSubs will return the Msg data to flush and reset
 func (m *Message) ResetSubs() {
 	if !m.IsBatch() {

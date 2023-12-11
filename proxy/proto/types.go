@@ -41,6 +41,7 @@ type NodeConn interface {
 	Close() error
 	Addr() string
 	Cluster() string
+	Password() string
 }
 
 // Pinger for executor ping node.

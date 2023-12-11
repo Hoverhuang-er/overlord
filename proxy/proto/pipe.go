@@ -167,6 +167,7 @@ func (mp *msgPipe) pipe() {
 					err = nc.Read(mp.batch[i])
 					mp.batch[i].MarkRead()
 					mp.batch[i].MarkAddr(nc.Addr())
+					mp.batch[i].MarkPasswd(nc.Password())
 				} else {
 					goto MEND
 				}
