@@ -13,7 +13,8 @@ import (
 )
 
 const (
-	respFetch = '$'
+	respFetch  = '$'
+	respString = '+'
 )
 
 var (
@@ -40,7 +41,7 @@ type FetchAuth struct {
 var (
 	cmdClusterNodesBytes = []byte("*2\r\n$7\r\nCLUSTER\r\n$5\r\nNODES\r\n")
 	cmdAuthBytes         = func(password string) []byte {
-		return bytes.NewBufferString(fmt.Sprintf("AUTH %s", password)).Bytes()
+		return bytes.NewBufferString(fmt.Sprintf("AUTH %s\r\n", password)).Bytes()
 	}
 	// ErrBadReplyType error bad reply type
 	ErrBadReplyType = errs.New("fetcher CLUSTER NODES bad reply type")
@@ -139,7 +140,7 @@ func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 			err = errors.WithStack(err)
 			return
 		}
-		if reply.Type() != respFetch {
+		if reply.Type() != respString {
 			err = errors.WithStack(ErrNotEqualOk)
 			return
 		}
