@@ -149,7 +149,6 @@ func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 		authdata = authdata[idx+2:]
 		break
 	}
-	log.Infof("Auth data is %s", authdata)
 	if err = f.bw.Write(cmdClusterNodesBytes); err != nil {
 		err = errors.WithStack(err)
 		return
