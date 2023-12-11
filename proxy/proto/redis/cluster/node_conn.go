@@ -59,8 +59,8 @@ func (nc *nodeConn) Cluster() string {
 }
 
 func (nc *nodeConn) Write(m *proto.Message) (err error) {
-	if err = nc.nc.Write(m); err != nil {
-		err = stackerr.ReplaceErrStack(err)
+	if err := nc.nc.Write(m); err != nil {
+		return stackerr.ReplaceErrStack(err)
 	}
 	return
 }
@@ -71,8 +71,7 @@ func (nc *nodeConn) Flush() error {
 
 func (nc *nodeConn) Read(m *proto.Message) (err error) {
 	if err = nc.nc.Read(m); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	req := m.Request().(*redis.Request)
 	// check request
@@ -125,22 +124,19 @@ func (nc *nodeConn) redirectProcess(m *proto.Message, req *redis.Request, addr s
 	defer nnc.Close()
 	if isAsk {
 		if err = rnc.Bw().Write(askingResp); err != nil {
-			err = stackerr.ReplaceErrStack(err)
-			return
+			return stackerr.ReplaceErrStack(err)
 		}
 	}
 	if err = req.RESP().Encode(rnc.Bw()); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	if err = rnc.Bw().Flush(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	// NOTE: even if the client waits a long time before reissuing the query, and in the meantime the cluster configuration
 	// changed, the destination node will reply again with a MOVED error if the hash slot is now served by another node.
 	if err = nnc.Read(m); err != nil {
-		err = stackerr.ReplaceErrStack(err)
+		return stackerr.ReplaceErrStack(err)
 	}
 	return
 }

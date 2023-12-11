@@ -48,8 +48,7 @@ type Proxy struct {
 // New new a proxy by config.
 func New(c *Config) (p *Proxy, err error) {
 	if err = c.Validate(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return nil, stackerr.ReplaceErrStack(err)
 	}
 	p = &Proxy{}
 	p.c = c

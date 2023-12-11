@@ -110,13 +110,12 @@ REREAD:
 	var bs []byte
 	if bs, err = n.br.ReadExact(requestHeaderLen); err == bufio.ErrBufferFull {
 		if err = n.br.Read(); err != nil {
-			err = stackerr.ReplaceErrStack(err)
+			return stackerr.ReplaceErrStack(err)
 			return
 		}
 		goto REREAD
 	} else if err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	parseHeader(bs, mcr, false)
 	bl := binary.BigEndian.Uint32(mcr.bodyLen)
@@ -127,13 +126,12 @@ REREADData:
 	var data []byte
 	if data, err = n.br.ReadExact(int(bl)); err == bufio.ErrBufferFull {
 		if err = n.br.Read(); err != nil {
-			err = stackerr.ReplaceErrStack(err)
+			return stackerr.ReplaceErrStack(err)
 			return
 		}
 		goto REREADData
 	} else if err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	mcr.data = append(mcr.data, data...)
 	return

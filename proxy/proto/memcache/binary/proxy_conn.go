@@ -71,14 +71,12 @@ NEXTGET:
 	if err == bufio.ErrBufferFull {
 		return
 	} else if err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	req := pc.request(m)
 	parseHeader(head, req, true)
 	if err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	switch req.respType {
 	case RequestTypeSet, RequestTypeAdd, RequestTypeReplace, RequestTypeGet, RequestTypeGetK,
@@ -105,8 +103,7 @@ func (pc *proxyConn) decodeCommon(m *proto.Message, req *MCRequest) (err error) 
 	if err == bufio.ErrBufferFull {
 		return
 	} else if err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	el := uint8(req.extraLen[0])
 	kl := binary.BigEndian.Uint16(req.keyLen)

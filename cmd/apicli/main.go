@@ -80,8 +80,7 @@ const (
 func createCluster(arg *model.ParamCluster) (err error) {
 	bs, err := json.Marshal(arg)
 	if err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	err = newReq(http.MethodPost, server+base, string(bs))
 	return
@@ -128,8 +127,7 @@ func newReq(method, url, body string) (err error) {
 	req, err = http.NewRequest(method, url, strings.NewReader(body))
 	resp, err := client.Do(req)
 	if err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	defer resp.Body.Close()
 	bs, err := ioutil.ReadAll(resp.Body)

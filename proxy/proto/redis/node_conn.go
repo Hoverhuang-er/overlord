@@ -87,7 +87,7 @@ func (nc *nodeConn) Write(m *proto.Message) (err error) {
 		return
 	}
 	if err = req.resp.encode(nc.bw); err != nil {
-		err = stackerr.ReplaceErrStack(err)
+		return stackerr.ReplaceErrStack(err)
 	}
 	return
 }
@@ -115,12 +115,12 @@ func (nc *nodeConn) Read(m *proto.Message) (err error) {
 	for {
 		if err = req.reply.decode(nc.br); err == bufio.ErrBufferFull {
 			if err = nc.br.Read(); err != nil {
-				err = stackerr.ReplaceErrStack(err)
+				return stackerr.ReplaceErrStack(err)
 				return
 			}
 			continue
 		} else if err != nil {
-			err = stackerr.ReplaceErrStack(err)
+			return stackerr.ReplaceErrStack(err)
 			return
 		}
 		return

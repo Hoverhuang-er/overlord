@@ -77,28 +77,24 @@ func newFetcherWhAuth(conn *libnet.Conn, cc *cluster) *fetcher {
 // Fetch new CLUSTER NODES result
 func (f *fetcher) fetch() (ns *nodeSlots, err error) {
 	if err = f.bw.Write(cmdClusterNodesBytes); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return nil, stackerr.ReplaceErrStack(err)
 	}
 	if err = f.bw.Flush(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return nil, stackerr.ReplaceErrStack(err)
 	}
 	var data []byte
 	begin := f.br.Mark()
 	for {
 		err = f.br.Read()
 		if err != nil {
-			err = stackerr.ReplaceErrStack(err)
-			return
+			return nil, stackerr.ReplaceErrStack(err)
 		}
 		reply := &redis.RESP{}
 		if err = reply.Decode(f.br); err == bufio.ErrBufferFull {
 			f.br.AdvanceTo(begin)
 			continue
 		} else if err != nil {
-			err = stackerr.ReplaceErrStack(err)
-			return
+			return nil, stackerr.ReplaceErrStack(err)
 		}
 		if reply.Type() != respFetch {
 			err = errors.WithStack(ErrBadReplyType)
@@ -116,13 +112,11 @@ func (f *fetcher) fetch() (ns *nodeSlots, err error) {
 func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 	if err = f.bw.Write(cmdAuthBytes(f.auth.password)); err != nil {
 		log.Errorf("Failed to auth with password :%v", err)
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return nil, stackerr.ReplaceErrStack(err)
 	}
 	if err = f.bw.Flush(); err != nil {
 		log.Errorf("Failed to auth with password :%v", err)
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return nil, stackerr.ReplaceErrStack(err)
 	}
 	log.Info("Write Auth CMD to Redis")
 	var authdata []byte
@@ -130,16 +124,14 @@ func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 	for {
 		err = f.br.Read()
 		if err != nil {
-			err = stackerr.ReplaceErrStack(err)
-			return
+			return nil, stackerr.ReplaceErrStack(err)
 		}
 		reply := &redis.RESP{}
 		if err = reply.Decode(f.br); err == bufio.ErrBufferFull {
 			f.br.AdvanceTo(begin1)
 			continue
 		} else if err != nil {
-			err = stackerr.ReplaceErrStack(err)
-			return
+			return nil, stackerr.ReplaceErrStack(err)
 		}
 		if reply.Type() != respString {
 			err = errors.WithStack(ErrNotEqualOk)
@@ -151,12 +143,10 @@ func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 		break
 	}
 	if err = f.bw.Write(cmdClusterNodesBytes); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return nil, stackerr.ReplaceErrStack(err)
 	}
 	if err = f.bw.Flush(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return nil, stackerr.ReplaceErrStack(err)
 	}
 	log.Info("Write Cluster Nodes CMD to Redis")
 	var data []byte
@@ -164,16 +154,14 @@ func (f *fetcher) fetchAuth() (ns *nodeSlots, err error) {
 	for {
 		err = f.br.Read()
 		if err != nil {
-			err = stackerr.ReplaceErrStack(err)
-			return
+			return nil, stackerr.ReplaceErrStack(err)
 		}
 		reply := &redis.RESP{}
 		if err = reply.Decode(f.br); err == bufio.ErrBufferFull {
 			f.br.AdvanceTo(begin)
 			continue
 		} else if err != nil {
-			err = stackerr.ReplaceErrStack(err)
-			return
+			return nil, stackerr.ReplaceErrStack(err)
 		}
 		if reply.Type() != respFetch {
 			err = errors.WithStack(ErrBadReplyType)

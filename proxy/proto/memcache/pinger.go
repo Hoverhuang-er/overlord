@@ -45,15 +45,13 @@ func (m *mcPinger) Ping() (err error) {
 	}
 	m.bw.Write(pingBytes)
 	if err = m.bw.Flush(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	_ = m.br.Read()
 	defer m.br.Buffer().Reset()
 	var b []byte
 	if b, err = m.br.ReadLine(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	if !bytes.Equal(b, pongBytes) {
 		err = errors.WithStack(ErrPingerPong)

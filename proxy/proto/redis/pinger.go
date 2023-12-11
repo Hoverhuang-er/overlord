@@ -54,15 +54,13 @@ func (p *pinger) Ping() (err error) {
 	}
 	_ = p.bw.Write(pingBytes)
 	if err = p.bw.Flush(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	_ = p.br.Read()
 	defer p.br.Buffer().Reset()
 	data, err := p.br.ReadLine()
 	if err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	if !bytes.Equal(data, pongBytes) {
 		err = errors.WithStack(ErrBadPong)

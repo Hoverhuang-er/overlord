@@ -227,7 +227,7 @@ func (pc *proxyConn) Encode(m *proto.Message) (err error) {
 		err = req.reply.encode(pc.bw)
 	}
 	if err != nil {
-		err = stackerr.ReplaceErrStack(err)
+		return stackerr.ReplaceErrStack(err)
 	}
 	return
 }

@@ -54,18 +54,15 @@ func (c *Conn) Ping() (err error) {
 		}
 	}()
 	if err = c.bw.Write(pingBytes); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	if err = c.bw.Flush(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	_ = c.br.Read()
 	var b []byte
 	if b, err = c.br.ReadLine(); err != nil {
-		err = stackerr.ReplaceErrStack(err)
-		return
+		return stackerr.ReplaceErrStack(err)
 	}
 	if !bytes.Equal(b, pongBytes) {
 		err = errors.WithStack(errping)
