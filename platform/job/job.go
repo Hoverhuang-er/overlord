@@ -1,7 +1,7 @@
 // Package job defines the job meta data
 package job
 
-import "overlord/pkg/types"
+import "github.com/Hoverhuang-er/overlord/pkg/types"
 
 // OpType is the operation of job name
 type OpType = string

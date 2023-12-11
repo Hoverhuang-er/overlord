@@ -3,7 +3,7 @@ package proto
 import (
 	"time"
 
-	"overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
 )
 
 const copyCollapsedMaxLength = 256 - 3

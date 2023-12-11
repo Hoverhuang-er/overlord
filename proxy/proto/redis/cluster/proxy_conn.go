@@ -3,10 +3,10 @@ package cluster
 import (
 	"bytes"
 	errs "errors"
-	"overlord/pkg/conv"
-	libnet "overlord/pkg/net"
-	"overlord/proxy/proto"
-	"overlord/proxy/proto/redis"
+	"github.com/Hoverhuang-er/overlord/pkg/conv"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/proxy/proto/redis"
 
 	"github.com/pkg/errors"
 )

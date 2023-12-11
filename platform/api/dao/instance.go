@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"overlord/pkg/etcd"
-	"overlord/pkg/types"
-	"overlord/platform/api/model"
-	"overlord/platform/job"
+	"github.com/Hoverhuang-er/overlord/pkg/etcd"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/platform/api/model"
+	"github.com/Hoverhuang-er/overlord/platform/job"
 )
 
 // SetInstanceWeight will change the given instance weight

@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"sync"
 
-	"overlord/pkg/types"
-	"overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
 )
 
 var (

@@ -23,7 +23,7 @@ mesos及zookeeper依赖java,必须使用jdk8以上
 ### 部署scheduler 
 #### build
 ```shell
-cd $GOPATH/src/overlord/cmd/scheduler
+cd $GOPATH/src/github.com/Hoverhuang-er/overlord/cmd/scheduler
 go build
 ```
 #### run
@@ -33,6 +33,6 @@ go build
 ### 部署executor
 #### build
 ```
-cd $GOPATH/src/overlord/cmd/executor
+cd $GOPATH/src/github.com/Hoverhuang-er/overlord/cmd/executor
 go build
 ```

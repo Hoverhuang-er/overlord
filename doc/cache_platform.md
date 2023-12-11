@@ -61,7 +61,7 @@ overlord
 
 #### scheduler 主体流程
 
-1. 连接到etcd/zk 获取 `/overlord/job` 目录下未完成的 job 并监听目录实时获取 api-server 下发的任务信息并保存到本地任务队列
+1. 连接到etcd/zk 获取 `/github.com/Hoverhuang-er/overlord/job` 目录下未完成的 job 并监听目录实时获取 api-server 下发的任务信息并保存到本地任务队列
 2. 注册到 mesos master 并订阅 mesos event。
 3. 监听 event_offer 事件，并判断当前任务队列是否有未完成任务
 4. oferr resources 是否符合task任务资源描述需求 （判断依据 mem cpu balance）
@@ -91,7 +91,7 @@ taskInfo.Data 存储 ip:port ,executor根据ip:port 定位到etcd获取对应的
 7. redis 的 pid 文件为 `redis.pid` 放在 working dir 目录下。
 8. memcache 类似。
 9. 所有缓存服务都需要在 working dir 下维持一个 meta.toml 文件，用来存储类似 "cluster name"等节点信息。严格禁止并发修改这个文件。
-10. mesos 的 executor 的 tmp dir 目录为 /data/var/overlord/tmp/{task_id}/
+10. mesos 的 executor 的 tmp dir 目录为 /data/var/github.com/Hoverhuang-er/overlord/tmp/{task_id}/
 
 所有文件（目录）的权限均为 `0755`，用户恒为 `root.root`
 

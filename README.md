@@ -1,7 +1,7 @@
 # Overlord 
 [![Build Status](https://travis-ci.org/bilibili/overlord.svg?branch=master)](https://travis-ci.org/bilibili/overlord) 
-[![GoDoc](http://godoc.org/github.com/bilibili/overlord/proxy?status.svg)](http://godoc.org/github.com/bilibili/overlord/proxy) 
-[![codecov](https://codecov.io/gh/bilibili/overlord/branch/master/graph/badge.svg)](https://codecov.io/gh/bilibili/overlord)
+[![GoDoc](http://godoc.org/github.com/bilibili/github.com/Hoverhuang-er/overlord/proxy?status.svg)](http://godoc.org/github.com/bilibili/github.com/Hoverhuang-er/overlord/proxy)
+[![codecov](https://codecov.io/gh/bilibili/github.com/Hoverhuang-er/overlord/branch/master/graph/badge.svg)](https://codecov.io/gh/bilibili/overlord)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bilibili/overlord)](https://goreportcard.com/report/github.com/bilibili/overlord)
 
 Overlord是[哔哩哔哩](https://www.bilibili.com)基于Go语言编写的memcache和redis&cluster的代理及集群管理功能，致力于提供自动化高可用的缓存服务解决方案。主要包括以下组件:  

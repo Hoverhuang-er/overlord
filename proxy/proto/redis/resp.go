@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"overlord/pkg/bufio"
-	"overlord/pkg/conv"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	"github.com/Hoverhuang-er/overlord/pkg/conv"
 )
 
 // respType is the type of redis resp

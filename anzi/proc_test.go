@@ -8,7 +8,7 @@ import (
 	"bufio"
 	"bytes"
 
-	"overlord/pkg/mockconn"
+	"github.com/Hoverhuang-er/overlord/pkg/mockconn"
 
 	"github.com/stretchr/testify/assert"
 )

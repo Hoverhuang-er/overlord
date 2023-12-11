@@ -10,11 +10,11 @@ import (
 	"strings"
 	"syscall"
 
-	"overlord/pkg/log"
-	"overlord/pkg/prom"
-	"overlord/proxy"
-	"overlord/proxy/slowlog"
-	"overlord/version"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/prom"
+	"github.com/Hoverhuang-er/overlord/proxy"
+	"github.com/Hoverhuang-er/overlord/proxy/slowlog"
+	"github.com/Hoverhuang-er/overlord/version"
 )
 
 var (

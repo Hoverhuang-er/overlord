@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"overlord/platform/api/model"
+	"github.com/Hoverhuang-er/overlord/platform/api/model"
 
 	"github.com/gin-gonic/gin"
 	"go.etcd.io/etcd/client"

@@ -3,12 +3,12 @@ package memcache
 import (
 	"bytes"
 
-	"overlord/pkg/bufio"
-	"overlord/pkg/conv"
-	libnet "overlord/pkg/net"
-	"overlord/pkg/types"
-	"overlord/proxy/proto"
-	"overlord/version"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	"github.com/Hoverhuang-er/overlord/pkg/conv"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/version"
 
 	"github.com/pkg/errors"
 )

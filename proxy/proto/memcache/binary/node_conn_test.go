@@ -6,11 +6,11 @@ import (
 	"testing"
 	"time"
 
-	"overlord/pkg/bufio"
-	"overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
 
-	"overlord/pkg/mockconn"
-	libnet "overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/pkg/mockconn"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
 
 	"github.com/pkg/errors"
 

@@ -4,9 +4,9 @@ import (
 	"bytes"
 	errs "errors"
 
-	"overlord/pkg/bufio"
-	libnet "overlord/pkg/net"
-	"overlord/proxy/proto/redis"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/proxy/proto/redis"
 
 	"github.com/pkg/errors"
 )

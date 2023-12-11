@@ -5,8 +5,8 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/stretchr/testify/assert"
 
-	"overlord/pkg/types"
-	"overlord/proxy"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/proxy"
 
 	"bufio"
 	"bytes"

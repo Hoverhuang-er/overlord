@@ -3,8 +3,8 @@ package memcache
 import (
 	errs "errors"
 	"fmt"
-	"overlord/pkg/types"
-	"overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
 	"sync"
 )
 
@@ -215,18 +215,29 @@ var (
 
 // MCRequest is the mc client Msg type and data.
 // Storage commands:
-// 	<command name> <key> <flags> <exptime> <bytes> [noreply]\r\n
-//  cas <key> <flags> <exptime> <bytes> <cas unique> [noreply]\r\n
+//
+//		<command name> <key> <flags> <exptime> <bytes> [noreply]\r\n
+//	 cas <key> <flags> <exptime> <bytes> <cas unique> [noreply]\r\n
+//
 // Retrieval commands:
-//  get|gets <key>*\r\n
+//
+//	get|gets <key>*\r\n
+//
 // Deletion command:
-//  delete <key> [noreply]\r\n
+//
+//	delete <key> [noreply]\r\n
+//
 // Increment/Decrement:
-//  incr|decr <key> <value> [noreply]\r\n
+//
+//	incr|decr <key> <value> [noreply]\r\n
+//
 // Touch:
-// 	touch <key> <exptime> [noreply]\r\n
+//
+//	touch <key> <exptime> [noreply]\r\n
+//
 // Get And Touch:
-// 	gat|gats <exptime> <key>*\r\n
+//
+//	gat|gats <exptime> <key>*\r\n
 type MCRequest struct {
 	respType RequestType
 	key      []byte

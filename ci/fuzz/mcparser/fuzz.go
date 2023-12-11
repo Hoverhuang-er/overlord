@@ -7,10 +7,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"overlord/pkg/bufio"
-	libnet "overlord/pkg/net"
-	"overlord/proxy/proto"
-	"overlord/proxy/proto/memcache"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/proxy/proto/memcache"
 )
 
 var (

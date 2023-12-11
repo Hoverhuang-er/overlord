@@ -1,6 +1,6 @@
 package service
 
-import "overlord/platform/api/model"
+import "github.com/Hoverhuang-er/overlord/platform/api/model"
 
 // GetAllVersions will load version from file path
 func (s *Service) GetAllVersions() ([]*model.Version, error) {

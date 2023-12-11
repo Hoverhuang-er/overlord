@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"overlord/pkg/bufio"
-	"overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	"github.com/Hoverhuang-er/overlord/pkg/net"
 
 	"github.com/pkg/errors"
 )

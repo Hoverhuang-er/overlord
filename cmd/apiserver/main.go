@@ -5,11 +5,11 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"overlord/pkg/log"
-	"overlord/platform/api/model"
-	"overlord/platform/api/server"
-	"overlord/platform/api/service"
-	"overlord/version"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/platform/api/model"
+	"github.com/Hoverhuang-er/overlord/platform/api/server"
+	"github.com/Hoverhuang-er/overlord/platform/api/service"
+	"github.com/Hoverhuang-er/overlord/version"
 )
 
 var (

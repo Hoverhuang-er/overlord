@@ -1,11 +1,11 @@
 package enri
 
 import (
-	"overlord/pkg/myredis"
+	"github.com/Hoverhuang-er/overlord/pkg/myredis"
 	"testing"
 	"time"
 
-	"overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
 
 	"github.com/stretchr/testify/assert"
 )

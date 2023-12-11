@@ -1,9 +1,9 @@
 package service
 
 import (
-	"overlord/pkg/myredis"
-	"overlord/platform/api/dao"
-	"overlord/platform/api/model"
+	"github.com/Hoverhuang-er/overlord/pkg/myredis"
+	"github.com/Hoverhuang-er/overlord/platform/api/dao"
+	"github.com/Hoverhuang-er/overlord/platform/api/model"
 )
 
 // New create new service of overlord

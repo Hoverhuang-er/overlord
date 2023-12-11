@@ -3,8 +3,8 @@ package anzi
 import (
 	"runtime"
 
-	"overlord/pkg/log"
-	"overlord/proxy"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/proxy"
 )
 
 // Config is the struct which used by cmd/anzi

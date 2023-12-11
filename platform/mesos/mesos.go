@@ -2,7 +2,7 @@ package mesos
 
 import (
 	"context"
-	"overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
 	"strconv"
 
 	ms "github.com/mesos/mesos-go/api/v1/lib"

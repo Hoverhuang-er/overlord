@@ -9,7 +9,7 @@
 
 anzi 是源自 bilibili 的轻量级 Redis 数据同步工具。在过去，我们采用 vipshop 开源的 [redis-migrate-tool](https://github.com/vipshop/redis-migrate-tool) 工具进行迁移，然而在使用的时候，我们发现了这个工具的很多不足之处。首先，这个工具不再支持 RDB 7 (redis-3.x)以上的版本，也就意味着它不能再将 redis-4.x 及以上版本的 redis 当做数据源来导入，这是我们要替换掉它的最主要原因。另外就是，原版本工具使用C编写，在维护性上稍差；原版本工具对磁盘磁盘性能高，主要是需要将RDB导入到磁盘中再读出来。
 
-anzi 采用 Go 语言编写，同时借助 [overlord/proxy](https://github.com/bilibili/overlord/blob/master/doc/wiki-cn/proxy.md) 启动一个代理将命令分发。
+anzi 采用 Go 语言编写，同时借助 [github.com/Hoverhuang-er/overlord/proxy](https://github.com/bilibili/github.com/Hoverhuang-er/overlord/blob/master/doc/wiki-cn/proxy.md) 启动一个代理将命令分发。
 
 ### 功能
 

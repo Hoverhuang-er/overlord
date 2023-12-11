@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"overlord/pkg/log"
-	"overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
 
 	"github.com/BurntSushi/toml"
 	"github.com/Pallinder/go-randomdata"

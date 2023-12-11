@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"overlord/pkg/etcd"
+	"github.com/Hoverhuang-er/overlord/pkg/etcd"
 )
 
 // GetAllSpecs will query and load all specs

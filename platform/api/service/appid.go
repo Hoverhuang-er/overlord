@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"overlord/platform/api/model"
+	"github.com/Hoverhuang-er/overlord/platform/api/model"
 )
 
 // CreateAppid create new appid

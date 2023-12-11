@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"overlord/platform/chunk"
-	"overlord/pkg/etcd"
-	"overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/etcd"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/platform/chunk"
 	"strings"
 	"text/template"
 )

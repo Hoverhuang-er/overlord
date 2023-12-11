@@ -2,7 +2,7 @@
 
 ## Install
 ```
-go get github.com/bilibili/overlord/cmd/enri
+go get github.com/bilibili/github.com/Hoverhuang-er/overlord/cmd/enri
 ```
 
 ## useage

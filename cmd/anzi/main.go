@@ -5,9 +5,9 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"overlord/anzi"
-	"overlord/pkg/log"
-	"overlord/version"
+	"github.com/Hoverhuang-er/overlord/anzi"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/version"
 )
 
 var confPath string

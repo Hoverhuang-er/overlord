@@ -6,10 +6,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"overlord/pkg/etcd"
-	"overlord/pkg/log"
-	"overlord/platform/api/model"
-	"overlord/platform/job"
+	"github.com/Hoverhuang-er/overlord/pkg/etcd"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/platform/api/model"
+	"github.com/Hoverhuang-er/overlord/platform/job"
 )
 
 // GetJob will get job info from redis or etcd

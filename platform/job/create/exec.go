@@ -13,11 +13,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"overlord/pkg/dir"
-	"overlord/pkg/etcd"
-	"overlord/pkg/log"
-	"overlord/pkg/proc"
-	"overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/pkg/dir"
+	"github.com/Hoverhuang-er/overlord/pkg/etcd"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/proc"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
 
 	"github.com/BurntSushi/toml"
 	"github.com/gofrs/flock"
@@ -219,7 +219,7 @@ func downloadBinary(info *DeployInfo) error {
 	}
 	url := fmt.Sprintf("%s/%s-%s.tar.gz", info.FileServer, cacheType, info.Version)
 
-	fileName := fmt.Sprintf("/tmp/overlord/%s-%s.tar.gz", cacheType, info.Version)
+	fileName := fmt.Sprintf("/tmp/github.com/Hoverhuang-er/overlord/%s-%s.tar.gz", cacheType, info.Version)
 	err := downloadFile(fileName, url)
 	if err != nil {
 		return err

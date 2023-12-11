@@ -8,27 +8,27 @@ import (
 	"strings"
 	"time"
 
-	"overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
 
 	cli "go.etcd.io/etcd/client"
 )
 
 // etcd base dir
 const (
-	FRAMEWORK           = "/overlord/framework"
-	ClusterDir          = "/overlord/clusters"
-	ClusterInstancesDir = "/overlord/clusters/%s/instances/"
-	InstanceDir         = "/overlord/instances/%s:%d"
-	InstanceDirPrefix   = "/overlord/instances"
-	HeartBeatDir        = "/overlord/heartbeat"
-	ConfigDir           = "/overlord/config"
-	JobsDir             = "/overlord/jobs"
-	JobDetailDir        = "/overlord/job_detail"
-	FrameWork           = "/overlord/framework"
-	AppidsDir           = "/overlord/appids"
-	SpecsDir            = "/overlord/specs"
-	FileServer          = "/overlord/fs"
-	PortSequence        = "/overlord/port_sequence"
+	FRAMEWORK           = "/github.com/Hoverhuang-er/overlord/framework"
+	ClusterDir          = "/github.com/Hoverhuang-er/overlord/clusters"
+	ClusterInstancesDir = "/github.com/Hoverhuang-er/overlord/clusters/%s/instances/"
+	InstanceDir         = "/github.com/Hoverhuang-er/overlord/instances/%s:%d"
+	InstanceDirPrefix   = "/github.com/Hoverhuang-er/overlord/instances"
+	HeartBeatDir        = "/github.com/Hoverhuang-er/overlord/heartbeat"
+	ConfigDir           = "/github.com/Hoverhuang-er/overlord/config"
+	JobsDir             = "/github.com/Hoverhuang-er/overlord/jobs"
+	JobDetailDir        = "/github.com/Hoverhuang-er/overlord/job_detail"
+	FrameWork           = "/github.com/Hoverhuang-er/overlord/framework"
+	AppidsDir           = "/github.com/Hoverhuang-er/overlord/appids"
+	SpecsDir            = "/github.com/Hoverhuang-er/overlord/specs"
+	FileServer          = "/github.com/Hoverhuang-er/overlord/fs"
+	PortSequence        = "/github.com/Hoverhuang-er/overlord/port_sequence"
 )
 
 // define watch event
@@ -58,7 +58,7 @@ type Etcd struct {
 	cfg  cli.Config  //Configuration details of the connection should be loaded from a configuration file
 }
 
-//New Function to create an etce object
+// New Function to create an etce object
 func New(endpoint string) (e *Etcd, err error) {
 	e = &Etcd{}
 	e.cfg = cli.Config{

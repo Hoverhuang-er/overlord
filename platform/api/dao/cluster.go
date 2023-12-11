@@ -9,12 +9,12 @@ import (
 	"strconv"
 	"strings"
 
-	"overlord/pkg/etcd"
-	"overlord/pkg/log"
-	"overlord/pkg/types"
-	"overlord/platform/api/model"
-	"overlord/platform/job"
-	"overlord/platform/job/create"
+	"github.com/Hoverhuang-er/overlord/pkg/etcd"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/platform/api/model"
+	"github.com/Hoverhuang-er/overlord/platform/job"
+	"github.com/Hoverhuang-er/overlord/platform/job/create"
 
 	"go.etcd.io/etcd/client"
 )

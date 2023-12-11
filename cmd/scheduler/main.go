@@ -4,10 +4,10 @@ import (
 	"flag"
 	"time"
 
-	"overlord/pkg/etcd"
-	"overlord/pkg/log"
-	"overlord/platform/mesos"
-	"overlord/version"
+	"github.com/Hoverhuang-er/overlord/pkg/etcd"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/platform/mesos"
+	"github.com/Hoverhuang-er/overlord/version"
 
 	"github.com/BurntSushi/toml"
 )

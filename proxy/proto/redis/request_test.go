@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"overlord/pkg/bufio"
-	"overlord/pkg/mockconn"
-	libnet "overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	"github.com/Hoverhuang-er/overlord/pkg/mockconn"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
 
 	"github.com/stretchr/testify/assert"
 )

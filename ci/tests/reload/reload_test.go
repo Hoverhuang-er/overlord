@@ -5,7 +5,7 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/stretchr/testify/assert"
 
-	"overlord/proxy"
+	"github.com/Hoverhuang-er/overlord/proxy"
 
 	"testing"
 	"time"

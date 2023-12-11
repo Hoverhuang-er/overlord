@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"encoding/json"
-	"overlord/pkg/log"
-	"overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
 )
 
 const byteSpace = byte(' ')
@@ -31,7 +31,7 @@ func (f *fileHandler) save(cluster string, entry *proto.SlowlogEntry) {
 
 func (f *fileHandler) openFile(file string) error {
 	var (
-		fd *os.File
+		fd  *os.File
 		err error
 	)
 	if _, err = os.Stat(file); os.IsNotExist(err) {
@@ -46,7 +46,6 @@ func (f *fileHandler) openFile(file string) error {
 			return err
 		}
 	}
-
 
 	f.fd = fd
 	f.wr = bufio.NewWriter(f.fd)

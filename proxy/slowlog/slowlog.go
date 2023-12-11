@@ -1,8 +1,8 @@
 package slowlog
 
 import (
-	"overlord/pkg/log"
-	"overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
 	"sync"
 	"sync/atomic"
 )

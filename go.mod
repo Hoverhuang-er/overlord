@@ -1,4 +1,4 @@
-module overlord
+module github.com/Hoverhuang-er/overlord
 
 go 1.21.4
 

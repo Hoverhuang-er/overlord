@@ -5,8 +5,8 @@ import (
 	"sort"
 	"time"
 
-	"overlord/pkg/log"
-	"overlord/pkg/myredis"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/myredis"
 )
 
 var (

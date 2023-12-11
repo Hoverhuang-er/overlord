@@ -9,12 +9,12 @@ import (
 	"strings"
 	"time"
 
-	"overlord/pkg/etcd"
-	"overlord/pkg/log"
-	"overlord/pkg/types"
-	"overlord/platform/chunk"
-	"overlord/platform/job"
-	"overlord/platform/job/create"
+	"github.com/Hoverhuang-er/overlord/pkg/etcd"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/platform/chunk"
+	"github.com/Hoverhuang-er/overlord/platform/job"
+	"github.com/Hoverhuang-er/overlord/platform/job/create"
 
 	pb "github.com/golang/protobuf/proto"
 	ms "github.com/mesos/mesos-go/api/v1/lib"

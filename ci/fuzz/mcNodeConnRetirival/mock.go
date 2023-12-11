@@ -2,9 +2,9 @@ package mcNodeConnRetrival
 
 import (
 	"bytes"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
 	"io"
 	"net"
-	libnet "overlord/pkg/net"
 	"sync/atomic"
 	"time"
 )

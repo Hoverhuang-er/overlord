@@ -5,9 +5,9 @@ import (
 	"reflect"
 	"testing"
 
-	"overlord/pkg/bufio"
-	"overlord/proxy/proto"
-	"overlord/proxy/proto/redis"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/proxy/proto/redis"
 
 	"bou.ke/monkey"
 	"github.com/stretchr/testify/assert"

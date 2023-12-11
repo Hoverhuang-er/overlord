@@ -1,12 +1,12 @@
 #!/bin/sh
 
-/data/etcd/etcdctl mkdir /overlord/clusters
+/data/etcd/etcdctl mkdir /github.com/Hoverhuang-er/overlord/clusters
 /data/etcd/etcdctl mkdir /ovelord/instances
-/data/etcd/etcdctl mkdir /overlord/heartbeat
-/data/etcd/etcdctl mkdir /overlord/config
-/data/etcd/etcdctl mkdir /overlord/jobs
-/data/etcd/etcdctl mkdir /overlord/job_detail
-/data/etcd/etcdctl mkdir /overlord/framework
-/data/etcd/etcdctl mkdir /overlord/appids
-/data/etcd/etcdctl mkdir /overlord/specs
-/data/etcd/etcdctl set /overlord/fs "http://172.22.20.48:20080"
+/data/etcd/etcdctl mkdir /github.com/Hoverhuang-er/overlord/heartbeat
+/data/etcd/etcdctl mkdir /github.com/Hoverhuang-er/overlord/config
+/data/etcd/etcdctl mkdir /github.com/Hoverhuang-er/overlord/jobs
+/data/etcd/etcdctl mkdir /github.com/Hoverhuang-er/overlord/job_detail
+/data/etcd/etcdctl mkdir /github.com/Hoverhuang-er/overlord/framework
+/data/etcd/etcdctl mkdir /github.com/Hoverhuang-er/overlord/appids
+/data/etcd/etcdctl mkdir /github.com/Hoverhuang-er/overlord/specs
+/data/etcd/etcdctl set /github.com/Hoverhuang-er/overlord/fs "http://172.22.20.48:20080"

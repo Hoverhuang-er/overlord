@@ -10,10 +10,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"overlord/pkg/hashkit"
-	"overlord/pkg/log"
-	libnet "overlord/pkg/net"
-	"overlord/proxy/proto"
+	"github.com/Hoverhuang-er/overlord/pkg/hashkit"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
 )
 
 const (

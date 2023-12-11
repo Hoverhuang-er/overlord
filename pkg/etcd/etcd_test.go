@@ -3,10 +3,10 @@ package etcd
 import (
 	"context"
 	"encoding/json"
-	"overlord/pkg/types"
+	"github.com/Hoverhuang-er/overlord/pkg/types"
 	"testing"
 
-	"overlord/platform/job"
+	"github.com/Hoverhuang-er/overlord/platform/job"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -36,7 +36,7 @@ func TestSet(t *testing.T) {
 	}
 	bs, err := json.Marshal(mcjob)
 	assert.NoError(t, err)
-	err = e.Set(ctx, "/overlord/jobs/job1", string(bs))
+	err = e.Set(ctx, "/github.com/Hoverhuang-er/overlord/jobs/job1", string(bs))
 	assert.NoError(t, err)
 
 	// redisjob := &job.Job{
@@ -49,7 +49,7 @@ func TestSet(t *testing.T) {
 	// }
 	// bs, err = json.Marshal(redisjob)
 	// assert.NoError(t, err)
-	// err = e.Set(ctx, "/overlord/jobs/job12", string(bs))
+	// err = e.Set(ctx, "/github.com/Hoverhuang-er/overlord/jobs/job12", string(bs))
 	// assert.NoError(t, err)
 }
 

@@ -1,8 +1,8 @@
 package memcache
 
 import (
-	"overlord/pkg/mockconn"
-	libnet "overlord/pkg/net"
+	"github.com/Hoverhuang-er/overlord/pkg/mockconn"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
 	"testing"
 	"time"
 

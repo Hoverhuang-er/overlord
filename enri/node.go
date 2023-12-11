@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"overlord/pkg/log"
-	"overlord/pkg/myredis"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/myredis"
 )
 
 // Node present node info.

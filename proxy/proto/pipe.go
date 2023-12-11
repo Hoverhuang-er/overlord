@@ -2,12 +2,12 @@ package proto
 
 import (
 	"errors"
-	"overlord/pkg/prom"
+	"github.com/Hoverhuang-er/overlord/pkg/prom"
 	"sync"
 	"sync/atomic"
 	"time"
 
-	"overlord/pkg/hashkit"
+	"github.com/Hoverhuang-er/overlord/pkg/hashkit"
 )
 
 const (

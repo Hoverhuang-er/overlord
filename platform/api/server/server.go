@@ -1,9 +1,9 @@
 package server
 
 import (
-	"overlord/pkg/log"
-	"overlord/platform/api/model"
-	"overlord/platform/api/service"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/platform/api/model"
+	"github.com/Hoverhuang-er/overlord/platform/api/service"
 
 	"github.com/gin-gonic/gin"
 )

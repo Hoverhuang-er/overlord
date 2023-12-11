@@ -3,7 +3,7 @@ package log_test
 import (
 	"testing"
 
-	"overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
 
 	"github.com/pkg/errors"
 )
