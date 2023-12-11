@@ -148,7 +148,23 @@ servers = [
 ]
 # Require clients to issue AUTH <PASSWORD> before processing any other commands.
 password = ""
-[redisCluster.auth]
+[connect_proxy.auth]
+# If enable is true, the client will use AUTH <PASSWORD> to auth.
+enable = true
+# If use_tls is true, the client will use TLS to connect to the server. else use password to auth.
+use_tls = false
+# The path to the client certificate file.
+cert_file = ""
+# The path to the client key file.
+key_file = ""
+# The path to the certificate authority file.
+ca_file = ""
+# The path to the certificate revocation list file.
+# Require clients to issue AUTH <PASSWORD> before processing any other commands.
+password = ""
+[connect_redis.auth]
+# Require clients to issue AUTH <PASSWORD> before processing any other commands.
+enable = true
 # If use_tls is true, the client will use TLS to connect to the server. else use password to auth.
 use_tls = false
 # The path to the client certificate file.

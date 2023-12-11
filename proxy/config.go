@@ -69,7 +69,6 @@ type ClusterConfig struct {
 	CacheType         types.CacheType `toml:"cache_type"`
 	ListenProto       string          `toml:"listen_proto"`
 	ListenAddr        string          `toml:"listen_addr"`
-	RedisAuth         string          `toml:"redis_auth"`
 	DialTimeout       int             `toml:"dial_timeout"`
 	ReadTimeout       int             `toml:"read_timeout"`
 	WriteTimeout      int             `toml:"write_timeout"`
@@ -79,11 +78,18 @@ type ClusterConfig struct {
 	SlowlogSlowerThan int             `toml:"slowlog_slower_than"`
 	Servers           []string        `toml:"servers"`
 	Password          string          `toml:"password"`
-	RedisCluster      RedisCluster    `toml:"redisCluster"`
+	ToRedis           Connect2Redis   `toml:"connect_redis"`
+	ToProxy           Connect2Proxy   `toml:"connect_proxy"`
 }
 
-type RedisCluster struct {
-	Auth Auth `toml:"auth"`
+type Connect2Redis struct {
+	Enable bool `toml:"enable"`
+	Auth   Auth `toml:"auth"`
+}
+
+type Connect2Proxy struct {
+	Enable bool `toml:"enable"`
+	Auth   Auth `toml:"auth"`
 }
 
 type Auth struct {

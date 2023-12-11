@@ -82,7 +82,40 @@ func (p *Proxy) serve(cc *ClusterConfig) {
 	if cc.SlowlogSlowerThan != 0 {
 		log.Infof("overlord start slowlog to [%s] with threshold [%d]us", cc.Name, cc.SlowlogSlowerThan)
 	}
-	go p.accept(cc, l, forwarder)
+	if cc.ToRedis.Enable {
+		if p.checkConnect2Redis(cc) != nil {
+			log.Errorf("To Redis Auth Enabled, overlord connect  cluster[%s] addr(%s) connect to redis failed", cc.Name, cc.ListenAddr)
+			return
+		}
+		log.Infof("overlord proxy cluster[%s] addr(%s) enabled to redis", cc.Name, cc.ListenAddr)
+		if cc.ToProxy.Enable {
+			if p.checkConnect2Proxy(cc) != nil {
+				log.Errorf("To Proxy Auth Enabled, overlord proxy cluster[%s] addr(%s) connect to proxy failed", cc.Name, cc.ListenAddr)
+				return
+			}
+			log.Infof("overlord proxy cluster[%s] addr(%s) enabled to proxy", cc.Name, cc.ListenAddr)
+		}
+		go p.acceptV2(cc, l, forwarder)
+	} else {
+		go p.accept(cc, l, forwarder)
+	}
+
+}
+
+// check connect to redis auth if enabled
+func (p *Proxy) checkConnect2Redis(cc *ClusterConfig) error {
+	if cc.ToRedis.Auth.Password == "" && len(cc.ToProxy.Auth.Password) == 0 {
+		return errors.New("redis auth password is empty, please check config file")
+	}
+	return nil
+}
+
+// check connect to proxy auth if enabled
+func (p *Proxy) checkConnect2Proxy(cc *ClusterConfig) error {
+	if cc.ToProxy.Auth.Password == "" && len(cc.ToProxy.Auth.Password) == 0 {
+		return errors.New("proxy auth password is empty, please check config file")
+	}
+	return nil
 }
 
 func (p *Proxy) accept(cc *ClusterConfig, l net.Listener, forwarder proto.Forwarder) {
@@ -109,11 +142,11 @@ func (p *Proxy) accept(cc *ClusterConfig, l net.Listener, forwarder proto.Forwar
 				case types.CacheTypeMemcacheBinary:
 					encoder = mcbin.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second))
 				case types.CacheTypeRedis:
-					//encoder = redis.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), cc.Password)
-					encoder = redis.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), cc.RedisCluster.Auth.CaFile, cc.RedisCluster.Auth.CertFile, cc.RedisCluster.Auth.Password, cc.RedisCluster.Auth.UseTLS)
+					encoder = redis.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), cc.Password)
+					//encoder = redis.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), cc.ToRedis.Auth.CaFile, cc.ToRedis.Auth.CertFile, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)
 				case types.CacheTypeRedisCluster:
-					//encoder = rclstr.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), nil, cc.Password, cc)
-					encoder = rclstr.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), nil, cc.RedisCluster.Auth.CaFile, cc.RedisCluster.Auth.CertFile, cc.RedisCluster.Auth.Password, cc.RedisCluster.Auth.UseTLS)
+					encoder = rclstr.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), nil, cc.Password)
+					//encoder = rclstr.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), nil, cc.ToRedis.Auth.CaFile, cc.ToRedis.Auth.CertFile, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)
 				}
 				if encoder != nil {
 					_ = encoder.Encode(proto.ErrMessage(ErrProxyMoreMaxConns))
@@ -129,6 +162,66 @@ func (p *Proxy) accept(cc *ClusterConfig, l net.Listener, forwarder proto.Forwar
 		atomic.AddInt32(&p.conns, 1)
 		NewHandler(p, cc, conn, forwarder).Handle()
 	}
+}
+
+// Acceptv2
+func (p *Proxy) acceptV2(cc *ClusterConfig, l net.Listener, forwarder proto.Forwarder) {
+	if err := p.verifyToProxyPassword(cc); err != nil {
+		log.Errorf("cluster(%s) addr(%s) verify connection error:%+v", cc.Name, cc.ListenAddr, err)
+		return
+	}
+	for {
+		if p.closed {
+			log.Infof("overlord proxy cluster[%s] addr(%s) stop listen", cc.Name, cc.ListenAddr)
+			return
+		}
+		conn, err := l.Accept()
+		if err != nil {
+			if conn != nil {
+				_ = conn.Close()
+			}
+			log.Errorf("cluster(%s) addr(%s) accept connection error:%+v", cc.Name, cc.ListenAddr, err)
+			continue
+		}
+		if p.c.Proxy.MaxConnections > 0 {
+			if conns := atomic.LoadInt32(&p.conns); conns > p.c.Proxy.MaxConnections {
+				// cache type
+				var encoder proto.ProxyConn
+				switch cc.CacheType {
+				case types.CacheTypeMemcache:
+					encoder = memcache.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second))
+				case types.CacheTypeMemcacheBinary:
+					encoder = mcbin.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second))
+				case types.CacheTypeRedis:
+					//encoder = redis.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), cc.Password)
+					encoder = redis.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), cc.ToRedis.Auth.CaFile, cc.ToRedis.Auth.CertFile, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)
+				case types.CacheTypeRedisCluster:
+					//encoder = rclstr.NewProxyConn(libnet.NewConn(conn, time.Second, time.Second), nil, cc.Password, cc)
+					encoder = rclstr.NewProxyConnV2(libnet.NewConn(conn, time.Second, time.Second), nil, cc.ToRedis.Auth.CaFile, cc.ToRedis.Auth.CertFile, cc.ToRedis.Auth.Password, cc.ToRedis.Auth.UseTLS)
+				}
+				if encoder != nil {
+					_ = encoder.Encode(proto.ErrMessage(ErrProxyMoreMaxConns))
+					_ = encoder.Flush()
+				}
+				_ = conn.Close()
+				if log.V(4) {
+					log.Warnf("proxy reject connection count(%d) due to more than max(%d)", conns, p.c.Proxy.MaxConnections)
+				}
+				continue
+			}
+		}
+		atomic.AddInt32(&p.conns, 1)
+		NewHandler(p, cc, conn, forwarder).Handle()
+	}
+}
+
+// Verify ToProxy Password
+func (p *Proxy) verifyToProxyPassword(cc *ClusterConfig) error {
+	if cc.ToProxy.Auth.Password == "" && len(cc.ToProxy.Auth.Password) == 0 {
+		return errors.New("proxy auth password is empty, please check config file")
+	}
+	log.Infof("overlord proxy cluster[%s] addr(%s) connected", cc.Name, cc.ListenAddr)
+	return nil
 }
 
 // Close close proxy resource.
