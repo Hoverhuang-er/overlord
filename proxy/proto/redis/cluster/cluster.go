@@ -184,6 +184,7 @@ func (c *cluster) tryFetch() bool {
 	for _, server := range c.servers {
 		shuffleMap[server] = struct{}{}
 	}
+	var connectedNode int
 	for server := range shuffleMap {
 		switch c.password {
 		case "":
@@ -197,6 +198,7 @@ func (c *cluster) tryFetch() bool {
 				}
 				continue
 			}
+			connectedNode++
 			c.initSlotNode(nSlots)
 			if log.V(4) {
 				log.Info("Redis Cluster try fetch success")
@@ -212,12 +214,13 @@ func (c *cluster) tryFetch() bool {
 				}
 				continue
 			}
+			connectedNode++
 			c.initSlotNode(nSlots)
 			if log.V(4) {
 				log.Info("Redis Cluster try fetch success")
 			}
 		}
-
+		log.Infof("Redis Cluster NodeConnected (%d/%d) already connect", connectedNode, len(shuffleMap))
 		return true
 	}
 	if log.V(1) {

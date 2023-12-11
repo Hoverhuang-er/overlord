@@ -170,9 +170,10 @@ func (p *Proxy) acceptV2(cc *ClusterConfig, l net.Listener, forwarder proto.Forw
 		log.Errorf("cluster(%s) addr(%s) verify connection error:%+v", cc.Name, cc.ListenAddr, err)
 		return
 	}
+	log.Infof("cluster(%s) addr(%s) verify connection successful", cc.Name, cc.ListenAddr)
 	for {
 		if p.closed {
-			log.Infof("overlord proxy cluster[%s] addr(%s) stop listen", cc.Name, cc.ListenAddr)
+			log.Warnf("overlord proxy cluster[%s] addr(%s) stop listen", cc.Name, cc.ListenAddr)
 			return
 		}
 		conn, err := l.Accept()
@@ -258,7 +259,7 @@ func (p *Proxy) MonitorConfChange(ccf string) {
 	log.Infof("proxy is watching changes cluster config absolute path as %s", absPath)
 	for {
 		if p.closed {
-			log.Infof("proxy is closed and exit configure file:%s monitor", p.ccf)
+			log.Warnf("proxy is closed and exit configure file:%s monitor", p.ccf)
 			return
 		}
 		select {
