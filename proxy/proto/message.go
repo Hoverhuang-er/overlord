@@ -73,6 +73,7 @@ type Message struct {
 	// Start Time, Write Time, ReadTime, EndTime, Start Pipe Time, End Pipe Time, Start Pipe Time, End Pipe Time
 	st, wt, rt, et, spt, ept, sit, eit time.Time
 	addr                               string
+	passwd                             string
 	err                                error
 }
 
