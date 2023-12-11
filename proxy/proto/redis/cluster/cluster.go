@@ -207,7 +207,7 @@ func (c *cluster) tryFetch() bool {
 			log.Infof("Connect redis with auth")
 			conn := libnet.DialWithTimeoutWithAuth(server, c.password, c.dto, c.rto, c.wto)
 			f := newFetcherWhAuth(conn, c)
-			nSlots, err := f.fetch()
+			nSlots, err := f.fetchAuth()
 			if err != nil {
 				if log.V(1) {
 					log.Errorf("Redis Cluster fail to fetch error:%v", err)
