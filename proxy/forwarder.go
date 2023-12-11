@@ -55,7 +55,7 @@ func NewForwarder(cc *ClusterConfig) proto.Forwarder {
 		dto := time.Duration(cc.DialTimeout) * time.Millisecond
 		rto := time.Duration(cc.ReadTimeout) * time.Millisecond
 		wto := time.Duration(cc.WriteTimeout) * time.Millisecond
-		if cc.ToRedis.Enable {
+		if !cc.ToRedis.Enable {
 			return rclstr.NewForwarder(cc.Name, cc.ListenAddr, cc.Servers, cc.NodeConnections, dto, rto, wto, []byte(cc.HashTag))
 		} else {
 			return rclstr.NewForwarderWithAuth(cc.Name, cc.ListenAddr, cc.ToRedis.Auth.Password, cc.Servers, cc.NodeConnections, dto, rto, wto, []byte(cc.HashTag))
