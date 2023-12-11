@@ -65,7 +65,7 @@ func (p *Proxy) Serve(ccs []*ClusterConfig) {
 	p.forwarders = map[string]proto.Forwarder{}
 	p.lock.Unlock()
 	for _, cc := range ccs {
-		log.Infof("start to serve cluster[%s] with configs %v", cc.Name, *cc)
+		log.Infof("start to serve cluster[%s] with configs %v \n nodeAddr:%s", cc.Name, *cc, cc.ListenAddr)
 		p.serve(cc)
 	}
 }

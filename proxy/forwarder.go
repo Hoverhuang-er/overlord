@@ -60,7 +60,6 @@ func NewForwarder(cc *ClusterConfig) proto.Forwarder {
 		} else {
 			return rclstr.NewForwarderWithAuth(cc.Name, cc.ListenAddr, cc.ToRedis.Auth.Password, cc.Servers, cc.NodeConnections, dto, rto, wto, []byte(cc.HashTag))
 		}
-
 	}
 	panic("unsupported protocol")
 }
