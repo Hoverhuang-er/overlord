@@ -33,15 +33,20 @@ type nodeConn struct {
 	sb strings.Builder
 
 	redirects int
+	password  string
+	state     int32
+}
 
-	state int32
+func (nc *nodeConn) Password() string {
+	//TODO implement me
+	return nc.password
 }
 
 func newNodeConn(c *cluster, addr string) (nc proto.NodeConn) {
 	nc = &nodeConn{
 		c:    c,
 		addr: addr,
-		nc:   redis.NewNodeConn(c.name, addr, c.dto, c.rto, c.wto),
+		nc:   redis.NewNodeConn(c.name, addr, c.password, c.dto, c.rto, c.wto),
 	}
 	return
 }

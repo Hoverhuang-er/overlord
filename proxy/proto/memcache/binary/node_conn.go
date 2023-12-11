@@ -24,11 +24,16 @@ type nodeConn struct {
 	cluster string
 	addr    string
 
-	conn *libnet.Conn
-	bw   *bufio.Writer
-	br   *bufio.Reader
+	conn     *libnet.Conn
+	bw       *bufio.Writer
+	br       *bufio.Reader
+	password string
+	state    int32
+}
 
-	state int32
+func (n *nodeConn) Password() string {
+	//TODO implement me
+	return n.password
 }
 
 // NewNodeConn returns node conn.

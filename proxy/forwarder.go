@@ -359,7 +359,7 @@ func newNodeConn(cc *ClusterConfig, addr string) proto.NodeConn {
 	case types.CacheTypeMemcacheBinary:
 		return mcbin.NewNodeConn(cc.Name, addr, dto, rto, wto)
 	case types.CacheTypeRedis:
-		return redis.NewNodeConn(cc.Name, addr, dto, rto, wto)
+		return redis.NewNodeConn(cc.Name, addr, cc.Password, dto, rto, wto)
 	default:
 		panic(types.ErrNoSupportCacheType)
 	}

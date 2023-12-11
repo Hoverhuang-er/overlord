@@ -38,23 +38,29 @@ type nodeConn struct {
 	conn    *libnet.Conn
 	bw      *bufio.Writer
 	br      *bufio.Reader
+	passwd  string
+	state   int32
+}
 
-	state int32
+func (nc *nodeConn) Password() string {
+	//TODO implement me
+	return nc.passwd
 }
 
 // NewNodeConn create the node conn from proxy to redis
-func NewNodeConn(cluster, addr string, dialTimeout, readTimeout, writeTimeout time.Duration) (nc proto.NodeConn) {
+func NewNodeConn(cluster, addr, password string, dialTimeout, readTimeout, writeTimeout time.Duration) (nc *nodeConn) {
 	conn := libnet.DialWithTimeout(addr, dialTimeout, readTimeout, writeTimeout)
-	return newNodeConn(cluster, addr, conn)
+	return newNodeConn(cluster, addr, password, conn)
 }
 
-func newNodeConn(cluster, addr string, conn *libnet.Conn) proto.NodeConn {
+func newNodeConn(cluster, addr, password string, conn *libnet.Conn) *nodeConn {
 	return &nodeConn{
 		cluster: cluster,
 		addr:    addr,
 		conn:    conn,
 		br:      bufio.NewReader(conn, bufio.Get(nodeReadBufSize)),
 		bw:      bufio.NewWriter(conn),
+		passwd:  password,
 	}
 }
 
