@@ -3,10 +3,9 @@ package cluster
 import (
 	"bytes"
 	errs "errors"
-	"github.com/Hoverhuang-er/overlord/pkg/log"
-	"strconv"
-
+	"fmt"
 	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
 	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
 	"github.com/Hoverhuang-er/overlord/proxy/proto/redis"
 
@@ -41,7 +40,7 @@ type FetchAuth struct {
 var (
 	cmdClusterNodesBytes = []byte("*2\r\n$7\r\nCLUSTER\r\n$5\r\nNODES\r\n")
 	cmdAuthBytes         = func(password string) []byte {
-		return strconv.AppendQuote([]byte("*2\r\n$4\r\nAUTH\r\n$"), password)
+		return bytes.NewBufferString(fmt.Sprintf("AUTH %s", password)).Bytes()
 	}
 	// ErrBadReplyType error bad reply type
 	ErrBadReplyType = errs.New("fetcher CLUSTER NODES bad reply type")
