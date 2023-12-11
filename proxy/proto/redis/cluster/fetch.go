@@ -24,6 +24,16 @@ type fetcher struct {
 	conn *libnet.Conn
 	bw   *bufio.Writer
 	br   *bufio.Reader
+	auth FetchAuth
+}
+
+type FetchAuth struct {
+	authorized bool
+	useTls     bool
+	password   string
+	cafile     string
+	certfile   string
+	keyfile    string
 }
 
 var (

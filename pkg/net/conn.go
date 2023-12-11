@@ -15,6 +15,7 @@ var (
 // Add auto timeout setting.
 type Conn struct {
 	addr string
+	pasw string
 	net.Conn
 
 	dialTimeout  time.Duration
@@ -28,6 +29,13 @@ type Conn struct {
 func DialWithTimeout(addr string, dialTimeout, readTimeout, writeTimeout time.Duration) (c *Conn) {
 	sock, _ := net.DialTimeout("tcp", addr, dialTimeout)
 	c = &Conn{addr: addr, Conn: sock, dialTimeout: dialTimeout, readTimeout: readTimeout, writeTimeout: writeTimeout}
+	return
+}
+
+// DialWithTimeout will create new auto timeout Conn
+func DialWithTimeoutWithAuth(addr, password string, dialTimeout, readTimeout, writeTimeout time.Duration) (c *Conn) {
+	sock, _ := net.DialTimeout("tcp", addr, dialTimeout)
+	c = &Conn{addr: addr, pasw: password, Conn: sock, dialTimeout: dialTimeout, readTimeout: readTimeout, writeTimeout: writeTimeout}
 	return
 }
 

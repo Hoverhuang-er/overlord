@@ -43,6 +43,7 @@ const (
 
 type cluster struct {
 	name          string
+	password      string
 	servers       []string
 	conns         int32
 	dto, rto, wto time.Duration
@@ -69,6 +70,28 @@ func NewForwarder(name, listen string, servers []string, conns int32, dto, rto, 
 		wto:     wto,
 		hashTag: hashTag,
 		action:  make(chan struct{}),
+	}
+	if !c.tryFetch() {
+		_ = c.Close()
+		log.Warnf("fail to init fetch cluster all seeds nodes cluster down but continue")
+		return c
+	}
+	c.fake(listen)
+	go c.fetchproc()
+	return c
+}
+
+func NewForwarderWithAuth(name, listen, password string, servers []string, conns int32, dto, rto, wto time.Duration, hashTag []byte) proto.Forwarder {
+	c := &cluster{
+		name:     name,
+		servers:  servers,
+		conns:    conns,
+		dto:      dto,
+		rto:      rto,
+		wto:      wto,
+		hashTag:  hashTag,
+		password: password,
+		action:   make(chan struct{}),
 	}
 	if !c.tryFetch() {
 		_ = c.Close()
@@ -162,19 +185,39 @@ func (c *cluster) tryFetch() bool {
 		shuffleMap[server] = struct{}{}
 	}
 	for server := range shuffleMap {
-		conn := libnet.DialWithTimeout(server, c.dto, c.rto, c.wto)
-		f := newFetcher(conn)
-		nSlots, err := f.fetch()
-		if err != nil {
-			if log.V(1) {
-				log.Errorf("Redis Cluster fail to fetch error:%v", err)
+		switch c.password {
+		case "":
+			log.Infof("Connect redis with no auth")
+			conn := libnet.DialWithTimeout(server, c.dto, c.rto, c.wto)
+			f := newFetcher(conn)
+			nSlots, err := f.fetch()
+			if err != nil {
+				if log.V(1) {
+					log.Errorf("Redis Cluster fail to fetch error:%v", err)
+				}
+				continue
 			}
-			continue
+			c.initSlotNode(nSlots)
+			if log.V(4) {
+				log.Info("Redis Cluster try fetch success")
+			}
+		default:
+			log.Infof("Connect redis with auth")
+			conn := libnet.DialWithTimeoutWithAuth(server, c.password, c.dto, c.rto, c.wto)
+			f := newFetcher(conn)
+			nSlots, err := f.fetch()
+			if err != nil {
+				if log.V(1) {
+					log.Errorf("Redis Cluster fail to fetch error:%v", err)
+				}
+				continue
+			}
+			c.initSlotNode(nSlots)
+			if log.V(4) {
+				log.Info("Redis Cluster try fetch success")
+			}
 		}
-		c.initSlotNode(nSlots)
-		if log.V(4) {
-			log.Info("Redis Cluster try fetch success")
-		}
+
 		return true
 	}
 	if log.V(1) {
