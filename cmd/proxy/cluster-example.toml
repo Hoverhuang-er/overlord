@@ -144,10 +144,10 @@ ping_auto_eject = false
 slowlog_slower_than = 10
 # A list of server address, port (name:port or ip:port) for this server pool when cache type is redis_cluster.
 servers = [
-    "127.0.0.1:12345",
+    "10.90.1.105:6379",
 ]
-# Require clients to issue AUTH <PASSWORD> before processing any other commands.
-password = ""
+[clusters.connect_proxy]
+enable = true
 [clusters.connect_proxy.auth]
 # If enable is true, the client will use AUTH <PASSWORD> to auth.
 enable = true
@@ -161,7 +161,9 @@ key_file = ""
 ca_file = ""
 # The path to the certificate revocation list file.
 # Require clients to issue AUTH <PASSWORD> before processing any other commands.
-password = ""
+password = "123321"
+[clusters.connect_redis]
+enable =true
 [clusters.connect_redis.auth]
 # Require clients to issue AUTH <PASSWORD> before processing any other commands.
 enable = true
@@ -175,4 +177,4 @@ key_file = ""
 ca_file = ""
 # The path to the certificate revocation list file.
 # Require clients to issue AUTH <PASSWORD> before processing any other commands.
-password = ""
+password = "123321"
