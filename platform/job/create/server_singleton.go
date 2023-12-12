@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/Hoverhuang-er/overlord/pkg/etcd"
 	"github.com/Hoverhuang-er/overlord/pkg/log"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 	"github.com/Hoverhuang-er/overlord/pkg/types"
 	"strings"
 	"text/template"

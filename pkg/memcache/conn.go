@@ -3,6 +3,7 @@ package memcache
 import (
 	"bytes"
 	"fmt"
+	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 	"time"
 
 	"github.com/Hoverhuang-er/overlord/pkg/bufio"
