@@ -58,8 +58,7 @@ func NewProxyConnV2(conn *libnet.Conn, fer proto.Forwarder, cca, ccert, cpasswd 
 		c = fer.(*cluster)
 	}
 	r := &proxyConn{
-		c: c,
-		//pc:       redis.NewProxyConn(conn, password),
+		c:        c,
 		pc:       redis.NewProxyConnV2(conn, cpasswd, useTls),
 		password: cpasswd,
 	}
@@ -71,6 +70,7 @@ func (pc *proxyConn) Decode(msgs []*proto.Message) ([]*proto.Message, error) {
 }
 
 func (pc *proxyConn) Encode(m *proto.Message) (err error) {
+	// TODO: Add auth
 	if !m.IsBatch() {
 		req := m.Request().(*redis.Request)
 		if !req.IsSupport() && !req.IsCtl() {
@@ -97,6 +97,7 @@ func (pc *proxyConn) Encode(m *proto.Message) (err error) {
 				return
 			}
 		}
+
 	}
 	return pc.pc.Encode(m)
 }

@@ -20,7 +20,7 @@ type Request interface {
 	Cmd() []byte
 	Key() []byte
 	Put()
-
+	Auth() []byte
 	Slowlogger
 }
 
