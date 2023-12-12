@@ -11,8 +11,6 @@ COPY . .
 RUN chmod a+x /usr/local/bin/skywalking-go-agent
 RUN ls -lath
 RUN go mod tidy && \
-    go get github.com/prometheus/client_golang/prometheus@v0.9.2 && \
-    go get github.com/sirupsen/logrus@v1.3.0 && \
     pwd && \
     /usr/local/bin/skywalking-go-agent -inject $(pwd)
 RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -toolexec="/usr/local/bin/skywalking-go-agent -config /opt/scripts/agent.default.yaml" -a -o /opt/app cmd/${DIR}/main.go
