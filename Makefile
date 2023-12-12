@@ -13,4 +13,4 @@ build:
 	cd cmd/anzi && go build && cd -
 
 push:
-	git add . && git commit -m "update" && git tag -a v100.0.1 -m "v100.0.1" -f && git push origin v100.0.1 --tags -f
+	git add . && git commit -m "update" && git tag -a v100.0.1 -m "v100.0.1" -f && git push origin v100.0.1 --tags -f && git push
