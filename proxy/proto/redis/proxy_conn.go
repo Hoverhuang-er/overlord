@@ -2,7 +2,6 @@ package redis
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
 	"github.com/sirupsen/logrus"
 	"strconv"
@@ -292,7 +291,7 @@ func (pc *proxyConn) CmdCheck(m *proto.Message) (isSpecialCmd bool, err error) {
 	}
 
 	if !req.IsSupport() {
-		err = pc.Bw().Write([]byte(fmt.Sprintf("-ERR unknown command `%s`, with args beginning with:\r\n", req.CmdString())))
+		// err = pc.Bw().Write([]byte(fmt.Sprintf("-ERR unknown command `%s`, with args beginning with:\r\n", req.CmdString())))
 		return
 	}
 	//
