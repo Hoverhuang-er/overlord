@@ -33,6 +33,8 @@ servers = [
     "127.0.0.1:10001:1",
     "127.0.0.1:10002:1",
 ]
+[clusters.connect_proxy]
+enable = true
 [clusters.connect_proxy.auth]
 # If enable is true, the client will use AUTH <PASSWORD> to auth.
 enable = true
@@ -47,6 +49,10 @@ ca_file = ""
 # The path to the certificate revocation list file.
 # Require clients to issue AUTH <PASSWORD> before processing any other commands.
 password = ""
+
+
+[clusters.connect_redis]
+enable =true
 [clusters.connect_redis.auth]
 # Require clients to issue AUTH <PASSWORD> before processing any other commands.
 enable = true

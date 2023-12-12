@@ -1,14 +1,16 @@
 package redis
 
 import (
+	"bytes"
 	errs "errors"
+	"fmt"
+	"github.com/Hoverhuang-er/overlord/pkg/bufio"
+	"github.com/Hoverhuang-er/overlord/pkg/log"
+	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
 	"github.com/Hoverhuang-er/overlord/pkg/stackerr"
+	"github.com/Hoverhuang-er/overlord/proxy/proto"
 	"sync/atomic"
 	"time"
-
-	"github.com/Hoverhuang-er/overlord/pkg/bufio"
-	libnet "github.com/Hoverhuang-er/overlord/pkg/net"
-	"github.com/Hoverhuang-er/overlord/proxy/proto"
 
 	"github.com/pkg/errors"
 )
@@ -22,7 +24,10 @@ const (
 
 var (
 	// ErrNodeConnClosed err node conn closed.
-	ErrNodeConnClosed = errs.New("redis node conn closed")
+	ErrNodeConnClosed    = errs.New("redis node conn closed")
+	cmdAuthWithPassBytes = func(password string) []byte {
+		return bytes.NewBufferString(fmt.Sprintf("AUTH %s\r\n", password)).Bytes()
+	}
 )
 
 // NodeConn is export type by nodeConn for redis-cluster.
@@ -41,6 +46,7 @@ type nodeConn struct {
 	br      *bufio.Reader
 	passwd  string
 	state   int32
+	authed  bool
 }
 
 func (nc *nodeConn) Password() string {
@@ -51,7 +57,9 @@ func (nc *nodeConn) Password() string {
 // NewNodeConn create the node conn from proxy to redis
 func NewNodeConn(cluster, addr, password string, dialTimeout, readTimeout, writeTimeout time.Duration) (nc *nodeConn) {
 	conn := libnet.DialWithTimeout(addr, dialTimeout, readTimeout, writeTimeout)
-	return newNodeConn(cluster, addr, password, conn)
+	var nnc = newNodeConn(cluster, addr, password, conn)
+	nnc.DoAuth()
+	return nnc
 }
 
 func newNodeConn(cluster, addr, password string, conn *libnet.Conn) *nodeConn {
@@ -63,6 +71,40 @@ func newNodeConn(cluster, addr, password string, conn *libnet.Conn) *nodeConn {
 		bw:      bufio.NewWriter(conn),
 		passwd:  password,
 	}
+}
+
+func (f *nodeConn) DoAuth() error {
+	if err := f.bw.Write(cmdAuthWithPassBytes(f.Password())); err != nil {
+		log.Errorf("Failed to auth with password :%v", err)
+	}
+	if err := f.bw.Flush(); err != nil {
+		log.Errorf("Failed to auth with password :%v", err)
+		return stackerr.ReplaceErrStack(err)
+	}
+	log.Info("Write Auth CMD to Redis")
+	var authdata []byte
+	begin1 := f.br.Mark()
+	for {
+		err := f.br.Read()
+		if err != nil {
+			return stackerr.ReplaceErrStack(err)
+		}
+		reply := &RESP{}
+		if err = reply.Decode(f.br); err == bufio.ErrBufferFull {
+			f.br.AdvanceTo(begin1)
+			continue
+		} else if err != nil {
+			return stackerr.ReplaceErrStack(err)
+		}
+		if reply.Type() != respString {
+			return stackerr.ReplaceErrStack(err)
+		}
+		authdata = reply.Data()
+		idx := bytes.Index(authdata, crlfBytes)
+		authdata = authdata[idx+2:]
+		break
+	}
+	return nil
 }
 
 func (nc *nodeConn) Addr() string {
