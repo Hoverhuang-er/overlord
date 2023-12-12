@@ -90,7 +90,7 @@ func (f *nodeConn) DoAuth() error {
 			return stackerr.ReplaceErrStack(err)
 		}
 		reply := &RESP{}
-		if err = reply.Decode(f.br); err == bufio.ErrBufferFull {
+		if err = reply.Decode(f.br); errs.Is(err, bufio.ErrBufferFull) {
 			f.br.AdvanceTo(begin1)
 			continue
 		} else if err != nil {

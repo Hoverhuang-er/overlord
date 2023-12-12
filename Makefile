@@ -14,3 +14,6 @@ build:
 
 push:
 	git add . && git commit -m "update" && git tag -a v100.0.1 -m "v100.0.1" -f && git push origin v100.0.1 --tags -f && git push
+
+tag:
+	git add . && git commit -m 'add coa feature 1a(password + TLS) + 2a + 3 +4 + web(caddy) + go get' && git push
