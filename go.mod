@@ -1,6 +1,6 @@
 module github.com/Hoverhuang-er/overlord
 
-go 1.21.4
+go 1.20
 
 require (
 	bou.ke/monkey v1.0.1
