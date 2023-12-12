@@ -158,6 +158,11 @@ func (r *Request) RESP() *RESP {
 	return r.resp
 }
 
+// RESP return request resp.
+func (r *Request) Auth() []byte {
+	return r.Auth()
+}
+
 // Reply return request reply.
 func (r *Request) Reply() *RESP {
 	return r.reply

@@ -286,7 +286,6 @@ func (pc *proxyConn) Flush() (err error) {
 
 func (pc *proxyConn) CmdCheck(m *proto.Message) (isSpecialCmd bool, err error) {
 	isSpecialCmd = false
-
 	req, ok := m.Request().(*Request)
 	if !ok {
 		return isSpecialCmd, ErrBadAssert
@@ -296,43 +295,43 @@ func (pc *proxyConn) CmdCheck(m *proto.Message) (isSpecialCmd bool, err error) {
 		err = pc.Bw().Write([]byte(fmt.Sprintf("-ERR unknown command `%s`, with args beginning with:\r\n", req.CmdString())))
 		return
 	}
+	//
+	//if !req.IsSpecial() {
+	//	if !pc.authorized {
+	//		err = pc.Bw().Write(noAuthBytes)
+	//		return
+	//	}
+	//	return
+	//}
 
-	if !req.IsSpecial() {
-		if !pc.authorized {
-			err = pc.Bw().Write(noAuthBytes)
-			return
-		}
-		return
-	}
-
-	if req.IsSpecial() {
-		isSpecialCmd = true
-		reqData := req.resp.array[0].data
-		if bytes.Equal(reqData, cmdAuthBytes) {
-			if bytes.Equal(req.Key(), []byte(pc.password)) {
-				pc.authorized = true
-				err = pc.Bw().Write(justOkBytes)
-			} else {
-				pc.authorized = false
-				err = pc.Bw().Write(invalidPasswordBytes)
-			}
-
-		} else if bytes.Equal(reqData, cmdPingBytes) {
-			if status := pc.authorized; status {
-				err = pc.Bw().Write(pongDataBytes)
-			} else {
-				err = pc.Bw().Write(noAuthBytes)
-			}
-		} else if bytes.Equal(reqData, cmdQuitBytes) {
+	//if req.IsSpecial() {
+	isSpecialCmd = true
+	reqData := req.resp.array[0].data
+	if bytes.Equal(reqData, cmdAuthBytes) {
+		if bytes.Equal(req.Key(), []byte(pc.password)) {
+			pc.authorized = true
 			err = pc.Bw().Write(justOkBytes)
-		} else if bytes.Equal(reqData, cmdCommandBytes) {
-			err = pc.Bw().Write([]byte(":-1\r\n"))
+		} else {
+			pc.authorized = false
+			err = pc.Bw().Write(invalidPasswordBytes)
 		}
-	} else {
-		if !pc.authorized {
+
+	} else if bytes.Equal(reqData, cmdPingBytes) {
+		if status := pc.authorized; status {
+			err = pc.Bw().Write(pongDataBytes)
+		} else {
 			err = pc.Bw().Write(noAuthBytes)
 		}
+	} else if bytes.Equal(reqData, cmdQuitBytes) {
+		err = pc.Bw().Write(justOkBytes)
+	} else if bytes.Equal(reqData, cmdCommandBytes) {
+		err = pc.Bw().Write([]byte(":-1\r\n"))
 	}
+	//} else {
+	//	if !pc.authorized {
+	//		err = pc.Bw().Write(noAuthBytes)
+	//	}
+	//}
 
 	return
 }

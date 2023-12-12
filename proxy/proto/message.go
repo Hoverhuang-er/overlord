@@ -104,6 +104,11 @@ func (m *Message) TotalDur() time.Duration {
 	return m.et.Sub(m.st)
 }
 
+// Auth will return the total duration of a command.
+func (m *Message) Auth() time.Duration {
+	return m.et.Sub(m.st)
+}
+
 // RemoteDur will return the remote execute time of remote mc node.
 func (m *Message) RemoteDur() time.Duration {
 	return m.rt.Sub(m.wt)

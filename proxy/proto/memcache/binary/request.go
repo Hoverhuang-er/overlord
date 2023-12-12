@@ -325,6 +325,11 @@ func (r *MCRequest) Key() []byte {
 	return r.key
 }
 
+// Key get Msg key.
+func (r *MCRequest) Auth() []byte {
+	return r.key
+}
+
 func (r *MCRequest) String() string {
 	return fmt.Sprintf("type:%s key:%s data:%s", r.respType.String(), r.key, r.data)
 }
