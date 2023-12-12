@@ -144,7 +144,7 @@ ping_auto_eject = false
 slowlog_slower_than = 10
 # A list of server address, port (name:port or ip:port) for this server pool when cache type is redis_cluster.
 servers = [
-    "10.90.1.105:6379",
+    "0.0.0.0:61379",
 ]
 [clusters.connect_proxy]
 enable = true
