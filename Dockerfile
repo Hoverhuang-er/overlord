@@ -12,7 +12,7 @@ RUN chmod a+x /usr/local/bin/skywalking-go-agent
 RUN ls -lath
 RUN go mod tidy && \
     pwd && \
-    /usr/local/bin/skywalking-go-agent -inject $(pwd) && \
+    /usr/local/bin/skywalking-go-agent -inject $(pwd)
 RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -toolexec="/usr/local/bin/skywalking-go-agent -config /opt/scripts/agent.default.yaml" -a -o /opt/app ./cmd/${DIR}/main.go
 FROM debian:trixie-slim as final
 ARG DIR
