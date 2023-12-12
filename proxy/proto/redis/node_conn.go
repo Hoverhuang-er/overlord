@@ -57,8 +57,12 @@ func (nc *nodeConn) Password() string {
 // NewNodeConn create the node conn from proxy to redis
 func NewNodeConn(cluster, addr, password string, dialTimeout, readTimeout, writeTimeout time.Duration) (nc *nodeConn) {
 	conn := libnet.DialWithTimeout(addr, dialTimeout, readTimeout, writeTimeout)
-	var nnc = newNodeConn(cluster, addr, password, conn)
-	nnc.DoAuth()
+	nnc := newNodeConn(cluster, addr, password, conn)
+	go func() {
+		if err := nnc.DoAuth(); err != nil {
+			log.Errorf("Failed to auth with password :%v", err)
+		}
+	}()
 	return nnc
 }
 
